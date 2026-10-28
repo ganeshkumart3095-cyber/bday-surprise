@@ -45,12 +45,12 @@ export function Gallery() {
           role="dialog" aria-modal="true" aria-label="Photo viewer"
           className="fixed inset-0 z-[60] flex items-center justify-center bg-foreground/80 p-4 backdrop-blur-sm animate-in fade-in"
           onClick={() => setOpen(null)}
-          onTouchStart={(e) => (touch.current = e.touches[0].clientX)}
-          onTouchEnd={(e) => { const dx = e.changedTouches[0].clientX - touch.current; if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1); }}
+          onTouchStart={(e) => (touch.current = e.touches[0]?.clientX ?? 0)}
+          onTouchEnd={(e) => { const dx = (e.changedTouches[0]?.clientX ?? 0) - touch.current; if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1); }}
         >
           <figure key={open} className="max-w-lg rounded-xl bg-card p-3 pb-5 shadow-soft animate-in zoom-in-95 slide-in-from-right-8" onClick={(e) => e.stopPropagation()}>
-            <img src={photos[open].src} alt={photos[open].alt} className="max-h-[65vh] w-full rounded-lg object-contain" />
-            <figcaption className="mt-3 text-center font-script text-2xl text-foreground">{photos[open].caption}</figcaption>
+            <img src={photos[open]!.src} alt={photos[open]!.alt} className="max-h-[65vh] w-full rounded-lg object-contain" />
+            <figcaption className="mt-3 text-center font-script text-2xl text-foreground">{photos[open]!.caption}</figcaption>
             <p className="text-center text-sm text-muted-foreground">{open + 1} / {photos.length} · swipe or use arrows</p>
           </figure>
           <button aria-label="Previous photo" onClick={(e) => { e.stopPropagation(); go(-1); }} className="absolute left-3 top-1/2 h-12 w-12 -translate-y-1/2 rounded-full bg-card text-2xl shadow-soft">‹</button>
