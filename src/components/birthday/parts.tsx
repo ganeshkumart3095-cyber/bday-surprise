@@ -8,7 +8,7 @@ export function Reveal({ children, className = "", delay = 0 }: { children: Reac
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => e.isIntersecting && (el.classList.add("in"), io.disconnect()), { threshold: 0.15 });
+    const io = new IntersectionObserver(([e]) => e?.isIntersecting && (el.classList.add("in"), io.disconnect()), { threshold: 0.15 });
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -31,7 +31,7 @@ export function FloatingBits() {
   const [items, setItems] = useState<{ l: number; d: number; s: number; delay: number; c: string }[]>([]);
   useEffect(() => {
     const sym = ["💗", "🌸", "✨", "💕", "🎀", "⭐"];
-    setItems(Array.from({ length: 16 }, () => ({ l: Math.random() * 100, d: 12 + Math.random() * 14, s: 14 + Math.random() * 16, delay: -Math.random() * 20, c: sym[Math.floor(Math.random() * sym.length)] })));
+    setItems(Array.from({ length: 16 }, () => ({ l: Math.random() * 100, d: 12 + Math.random() * 14, s: 14 + Math.random() * 16, delay: -Math.random() * 20, c: sym[Math.floor(Math.random() * sym.length)]! })));
   }, []);
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
