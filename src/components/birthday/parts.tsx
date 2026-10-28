@@ -123,7 +123,7 @@ export function MusicToggle() {
     if (on) { a.pause(); setOn(false); } else { await a.play().catch(() => {}); setOn(true); }
   };
   return (
-    <div className="fixed bottom-4 left-4 z-40 flex items-center gap-2">
+    <div className="fixed right-4 top-4 z-40 flex flex-row-reverse items-center gap-2 md:bottom-4 md:left-4 md:right-auto md:top-auto md:flex-row">
       {birthday.musicSrc && <audio ref={ref} src={birthday.musicSrc} loop preload="none" />}
       <button onClick={toggle} aria-label={on ? "Pause music" : "Play music"} className="flex h-12 w-12 items-center justify-center rounded-full bg-card text-xl shadow-soft transition-transform hover:scale-110">
         {on ? <span className="flex items-end gap-0.5 h-5">{[0, 1, 2].map((i) => <span key={i} className="w-1 rounded bg-primary animate-pulse" style={{ height: `${8 + i * 5}px`, animationDelay: `${i * 0.2}s` }} />)}</span> : "🎵"}
