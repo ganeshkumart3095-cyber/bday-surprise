@@ -8,7 +8,7 @@ import { getRouter } from "@/router";
 import { assetUrl } from "@/lib/utils";
 import { birthday } from "@/config/birthday";
 import { PhotoRevealModal } from "@/components/birthday/PhotoRevealModal";
-import { Videos } from "@/components/birthday/sections";
+import { FinalWish, Videos } from "@/components/birthday/sections";
 
 describe("App routing", () => {
   it("matches a page for / instead of falling back to not found", () => {
@@ -37,7 +37,27 @@ describe("PhotoRevealModal", () => {
   it("renders when isOpen is true", () => {
     const onProceed = vi.fn();
     render(<PhotoRevealModal isOpen={true} onProceed={onProceed} />);
-    expect(screen.getByText(/Caught in 4K/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /Happy Birthday, Thangachii!/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByAltText(/Happy Birthday Thangachii with Anna/i)).toBeInTheDocument();
+  });
+});
+
+describe("FinalWish with Grand Finale Funny Photo & Heartfelt Message", () => {
+  it("opens funny photo modal with heartfelt words when candles are blown", () => {
+    render(<FinalWish />);
+    const blowBtn = screen.getByRole("button", { name: /Close your eyes, make a wish & blow/i });
+    expect(blowBtn).toBeInTheDocument();
+
+    fireEvent.click(blowBtn);
+
+    // Funny photo modal appears with Caught in 4K and Anna's message
+    expect(screen.getByText(/Caught in 4K, Thangachii!/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/This is the happiness after all those emotions!/i),
+    ).toBeInTheDocument();
+    expect(screen.getByAltText(/Caught in 4K Thangachii/i)).toBeInTheDocument();
   });
 });
 

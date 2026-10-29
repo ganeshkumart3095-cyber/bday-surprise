@@ -9,3 +9,4 @@ if (fs.existsSync(distDir)) {
   fs.copyFileSync(path.join(distDir, 'index.html'), path.join(secretDir, 'index.html'));
   console.log('Created dist/secret/index.html for direct SPA 200 OK routing on GitHub Pages.');
 }
+

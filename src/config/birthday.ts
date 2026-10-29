@@ -22,9 +22,12 @@ export const birthday = {
   musicSrc: assetUrl("/audio/birthday-music.mp3"),
   musicTitle: "Birthday melody for you 🎵",
 
-  // Funny reveal photo & celebration song for popup
-  funnyPhoto: assetUrl("/images/funny-photo.jpg"),
+  // Celebration reveal photo & Happy Birthday song for cake-cutting popup
+  revealPhoto: assetUrl("/images/happy-reveal.jpg"),
   happyBirthdayMusicSrc: assetUrl("/audio/happy-birthday.mp3"),
+
+  // Funny 4K photo & heartfelt message for Chapter 4 Make a Wish climax
+  funnyPhoto: assetUrl("/images/funny-photo.jpg"),
 
   // Complete memories collection (all photos cleanly mapped)
   photos: [

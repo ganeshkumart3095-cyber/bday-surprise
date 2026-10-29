@@ -3,6 +3,8 @@ import { birthday } from "@/config/birthday";
 import { assetUrl } from "@/lib/utils";
 import { confetti, heartBurst } from "./effects";
 import { Reveal } from "./parts";
+import { ConfettiEffect } from "./ConfettiEffect";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Heart,
   ChevronLeft,
@@ -1046,39 +1048,166 @@ export function Reasons() {
 /* ---------- Final: Make a Wish with the Layered Celebration Cake ---------- */
 export function FinalWish() {
   const [blown, setBlown] = useState(false);
+  const [showFinaleModal, setShowFinaleModal] = useState(false);
 
   const handleBlow = (e: React.MouseEvent) => {
     setBlown(true);
-    confetti(220);
+    setShowFinaleModal(true);
+    confetti(260);
     heartBurst(e.clientX || window.innerWidth / 2, e.clientY || window.innerHeight / 2, [
       "⭐",
       "💖",
       "✨",
       "🎉",
       "🎂",
+      "🤪",
     ]);
   };
 
   const handleRelight = () => {
     setBlown(false);
+    setShowFinaleModal(false);
   };
 
   return (
-    <div className="flex flex-col items-center text-center">
-      <Reveal>
-        <div className="mb-6">
-          <CelebrationCake blown={blown} onBlow={handleBlow} onRelight={handleRelight} />
-        </div>
-      </Reveal>
+    <>
+      {/* Celebration Confetti Blast when modal opens */}
+      <ConfettiEffect show={showFinaleModal} duration={12000} />
 
-      <Reveal className="mt-14 max-w-2xl">
-        <h2 className="font-script text-5xl text-rose-gradient md:text-7xl leading-tight">
-          {birthday.finalMessage}
-        </h2>
-        <p className="mt-4 text-lg text-muted-foreground">
-          Happy Birthday, {birthday.nameTamil} 💗 — {birthday.from}
-        </p>
-      </Reveal>
-    </div>
+      {/* Grand Finale Funny Photo Modal */}
+      <AnimatePresence>
+        {showFinaleModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto"
+            onClick={() => setShowFinaleModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, y: 30, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.85, opacity: 0 }}
+              transition={{ type: "spring", damping: 18, stiffness: 220 }}
+              className="relative my-8 w-full max-w-lg overflow-hidden rounded-3xl border border-rose-200/80 bg-card/95 p-5 sm:p-7 shadow-2xl backdrop-blur-xl text-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={() => setShowFinaleModal(false)}
+                className="absolute right-4 top-4 rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-petal hover:text-primary cursor-pointer"
+                aria-label="Close finale surprise"
+              >
+                <X className="h-5 w-5" />
+              </button>
+
+              {/* Badge & Title */}
+              <div className="flex flex-col items-center">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-petal px-3.5 py-1 text-xs font-semibold text-primary">
+                  <Sparkles className="h-3.5 w-3.5" /> 📸 SURPRISE GRAND FINALE 🤪
+                </span>
+                <h3 className="mt-2.5 font-script text-3xl sm:text-4xl text-primary leading-tight">
+                  Caught in 4K, Thangachii! 😂💖
+                </h3>
+                <p className="mt-1 text-xs sm:text-sm text-muted-foreground">
+                  Pure happiness & laughter after all those emotions!
+                </p>
+              </div>
+
+              {/* Funny Fisheye Photo Card */}
+              <motion.div
+                initial={{ scale: 0.85, rotate: -3 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: "spring", damping: 14, stiffness: 200, delay: 0.15 }}
+                className="relative mx-auto my-4 overflow-hidden rounded-2xl bg-white p-3 shadow-xl border border-rose-200 max-w-[270px] sm:max-w-[300px]"
+              >
+                <div className="relative aspect-square overflow-hidden rounded-xl bg-muted shadow-inner">
+                  <img
+                    src={birthday.funnyPhoto}
+                    alt="Caught in 4K Thangachii"
+                    className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
+                </div>
+                <p className="mt-2.5 text-center font-script text-xl sm:text-2xl text-primary">
+                  The One & Only Goofy Queen 👑✨
+                </p>
+              </motion.div>
+
+              {/* Anna's Heartfelt Concluding Message */}
+              <div className="mt-4 rounded-2xl bg-rose-50/70 dark:bg-rose-950/20 p-4 sm:p-5 border border-rose-200/60 text-left">
+                <p className="font-script text-2xl sm:text-3xl text-primary text-center">
+                  "This is the happiness after all those emotions! 🥹💖"
+                </p>
+                <p className="mt-2.5 text-xs sm:text-sm text-foreground/90 leading-relaxed text-center">
+                  I want you to be happy like this forever and ever, Thangachii. Laughing out loud
+                  without holding back, smiling freely without a single worry in the world. Whatever
+                  comes in life, no matter where we are, your Anna will always be right here behind
+                  you to protect your smile and cheer for every dream of yours.
+                </p>
+                <p className="mt-3 text-center font-script text-xl sm:text-2xl text-rose-500 font-semibold">
+                  Stay blessed, stay crazy, stay this happy forever! 🤍🫂
+                </p>
+              </div>
+
+              {/* Interactive Modal Buttons */}
+              <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={handleRelight}
+                  className="flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-card px-5 py-2.5 text-xs sm:text-sm font-semibold text-foreground shadow-soft border border-border/60 transition-all hover:bg-muted/80 active:scale-95 cursor-pointer"
+                >
+                  <RotateCcw className="h-4 w-4 text-primary" />
+                  <span>Relight Candles 🕯️</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowFinaleModal(false)}
+                  className="flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-gradient-to-r from-rose-500 via-pink-500 to-primary px-6 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-soft transition-all hover:scale-105 active:scale-95 cursor-pointer"
+                >
+                  <Sparkles className="h-4 w-4" />
+                  <span>Cherish Every Moment 💖</span>
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="flex flex-col items-center text-center">
+        <Reveal>
+          <div className="mb-6">
+            <CelebrationCake blown={blown} onBlow={handleBlow} onRelight={handleRelight} />
+          </div>
+        </Reveal>
+
+        {/* Action button to re-open the funny surprise popup if closed */}
+        {blown && (
+          <Reveal className="mt-4">
+            <button
+              type="button"
+              onClick={() => {
+                setShowFinaleModal(true);
+                confetti(150);
+              }}
+              className="inline-flex items-center gap-2 rounded-full bg-petal px-5 py-2 text-sm font-semibold text-primary border border-primary/20 shadow-soft transition-all hover:scale-105 active:scale-95 cursor-pointer"
+            >
+              <Sparkles className="h-4 w-4" />
+              <span>View Surprise Photo & Anna's Message 📸💖</span>
+            </button>
+          </Reveal>
+        )}
+
+        <Reveal className="mt-14 max-w-2xl">
+          <h2 className="font-script text-5xl text-rose-gradient md:text-7xl leading-tight">
+            {birthday.finalMessage}
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Happy Birthday, {birthday.nameTamil} 💗 — {birthday.from}
+          </p>
+        </Reveal>
+      </div>
+    </>
   );
 }
