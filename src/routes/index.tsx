@@ -8,9 +8,9 @@ import { heartBurst } from "@/components/birthday/effects";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Happy Birthday, Thangachii 💗" },
+      { title: "Bday Surprise 💗" },
       { name: "description", content: "A little birthday surprise from Anna — memories, a letter, and lots of love." },
-      { property: "og:title", content: "Happy Birthday, Thangachii 💗" },
+      { property: "og:title", content: "Bday Surprise 💗" },
       { property: "og:description", content: "A birthday surprise from Anna, full of memories and love." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
