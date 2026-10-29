@@ -247,14 +247,54 @@ export function CelebrationCake({
   );
 }
 
-/* ---------- Gallery: Handcrafted Polaroid Scrapbook Wall + Next-Gen Lightbox ---------- */
+/* ---------- Gallery: Modern Bento Grid + Zero Cropping + Next-Gen Lightbox ---------- */
+type BentoType = "big" | "tall" | "normal";
+
+const getBentoType = (i: number): BentoType => {
+  // Featured BIG cards (2 cols, 2 rows):
+  // 0: photo1 - "The day it all began 💕" (BIG 1)
+  // 4: photo5 - 1080x1080 square "Festival vibes ✨" (BIG 5)
+  // 9: photo10 - "The best cake thief 🎂"
+  // 12: photo13 - "Family photo — you stole the show"
+  // 20: photo20 - "College days & golden friendships 💕"
+  // 24: photo24 - "Smiles that brighten every single day 😊"
+  // 25: photo25 - "Forever proud of you, Thangachii 🫂💯"
+  if ([0, 4, 9, 12, 20, 24, 25].includes(i)) {
+    return "big";
+  }
+
+  // TALL cards (1 col, 2 rows for tall phone screenshots & portraits):
+  // 1: photo2 (1080x2340)
+  // 6: photo7 (720x1561)
+  // 14: photo15 (900x1600 proud Anna)
+  // 15: photo16 (720x1561 late night talks)
+  // 16: photo17 (720x1600 graduation glow)
+  if ([1, 6, 14, 15, 16].includes(i)) {
+    return "tall";
+  }
+
+  // STANDARD cards (1 col, 1 row):
+  return "normal";
+};
+
+const getBentoSpan = (type: BentoType) => {
+  switch (type) {
+    case "big":
+      return "col-span-2 row-span-2";
+    case "tall":
+      return "col-span-1 row-span-2";
+    case "normal":
+    default:
+      return "col-span-1 row-span-1";
+  }
+};
+
 export function Gallery() {
   const photos = birthday.photos;
   const [open, setOpen] = useState<number | null>(null);
   const [direction, setDirection] = useState<"next" | "prev">("next");
   const [loaded, setLoaded] = useState<Set<number>>(new Set());
   const [liked, setLiked] = useState<Set<number>>(new Set());
-  const [hovered, setHovered] = useState<number | null>(null);
   const touchX = useRef(0);
   const touchY = useRef(0);
 
@@ -288,120 +328,93 @@ export function Gallery() {
     });
   };
 
-  // Soft washi tape pastel color variants
-  const washiTapes = [
-    "bg-rose/40 border-rose/30 -rotate-2",
-    "bg-lavender/50 border-lavender/40 rotate-1",
-    "bg-mint/45 border-mint/35 rotate-3",
-    "bg-peach/50 border-peach/40 -rotate-1",
-  ];
-
-  // Cute scrapbook stickers for corners
-  const stickers = ["🌸", "🍓", "🎀", "🧸", "✨", "🧁", "🌟", "💐"];
-
   return (
     <>
-      {/* Masonry Scrapbook Wall: Clean, uninterrupted polaroids with zero gaps */}
-      <div className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-5 md:gap-6 [column-fill:_balance]">
+      {/* Modern Bento Grid with dense packing and zero image cropping */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 md:gap-5 auto-rows-[190px] sm:auto-rows-[220px] md:auto-rows-[250px] lg:auto-rows-[260px] grid-flow-dense">
         {photos.map((p, i) => {
-          const rotation = ((i * 37) % 5) - 2; // Organic subtle tilt between -2deg and +2deg
-          const hasTape = i % 3 === 0;
-          const hasSticker = i % 4 === 1;
-          const isCurrentHovered = hovered === i;
+          const bentoType = getBentoType(i);
           const isLoved = liked.has(i);
 
           return (
-            <div key={i} className="mb-6 break-inside-avoid">
-              <Reveal delay={(i % 4) * 80}>
-                <div
-                  onMouseEnter={() => setHovered(i)}
-                  onMouseLeave={() => setHovered(null)}
-                  className="group relative transition-all duration-400 ease-out hover:z-20 hover:-translate-y-2.5 hover:scale-[1.02]"
-                  style={{
-                    transform: `rotate(${isCurrentHovered ? 0 : rotation}deg)`,
-                    transition:
-                      "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease",
-                  }}
-                >
-                  {/* Decorative Washi Tape Accent */}
-                  {hasTape && (
-                    <div
-                      aria-hidden="true"
-                      className={`washi-tape absolute -top-3 left-1/2 z-10 h-5 w-20 md:w-24 -translate-x-1/2 rounded-xs border backdrop-blur-xs opacity-85 pointer-events-none ${
-                        washiTapes[i % washiTapes.length]
-                      }`}
-                    />
-                  )}
+            <div
+              key={i}
+              role="button"
+              tabIndex={0}
+              onClick={() => setOpen(i)}
+              onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setOpen(i)}
+              className={`group relative flex flex-col justify-between overflow-hidden rounded-2xl md:rounded-3xl border border-border/50 bg-card/85 shadow-soft transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-primary/40 focus-visible:ring-4 focus-visible:ring-ring focus:outline-none cursor-pointer ${getBentoSpan(
+                bentoType,
+              )}`}
+            >
+              {/* Ambient Blurred Backdrop using the exact photo's color tones */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-cover bg-center blur-2xl opacity-25 scale-125 pointer-events-none transition-opacity duration-500 group-hover:opacity-40"
+                style={{ backgroundImage: `url(${p.src})` }}
+              />
 
-                  {/* Cute Scrapbook Corner Sticker */}
-                  {hasSticker && !hasTape && (
-                    <span
-                      aria-hidden="true"
-                      className="absolute -top-2 -right-2 z-10 text-xl drop-shadow-xs pointer-events-none select-none transition-transform group-hover:scale-125 group-hover:rotate-12"
-                    >
-                      {stickers[i % stickers.length]}
+              {/* Card Header: Memory tag badge + Featured label + Quick Heart Button */}
+              <div className="relative z-20 flex items-center justify-between p-3 sm:p-3.5 pointer-events-none">
+                <div className="flex items-center gap-1.5 pointer-events-auto">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-background/85 px-2.5 py-0.5 text-[10px] sm:text-xs font-semibold tracking-wider text-muted-foreground uppercase backdrop-blur-md border border-border/50 shadow-2xs">
+                    {bentoType === "big" && (
+                      <Sparkles className="h-3 w-3 text-amber-500 fill-amber-400" />
+                    )}
+                    MEM #{(i + 1).toString().padStart(2, "0")}
+                  </span>
+                  {bentoType === "big" && (
+                    <span className="hidden sm:inline-flex items-center rounded-full bg-primary/10 text-primary px-2 py-0.5 text-[10px] font-semibold tracking-wide backdrop-blur-md border border-primary/20">
+                      Featured
                     </span>
                   )}
-
-                  {/* Polaroid Card Frame */}
-                  <div
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => setOpen(i)}
-                    onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setOpen(i)}
-                    className="cursor-pointer rounded-2xl bg-card p-3 pb-4 shadow-soft transition-shadow duration-300 hover:shadow-2xl border border-border/40 focus-visible:ring-4 focus-visible:ring-ring focus:outline-none relative"
-                  >
-                    {/* Direct Quick Heart Button on the Polaroid */}
-                    <button
-                      type="button"
-                      aria-label={isLoved ? "Remove like" : "Like this photo"}
-                      onClick={(e) => toggleLike(e, i)}
-                      className={`absolute right-4.5 top-4.5 z-20 flex h-7 w-7 items-center justify-center rounded-full backdrop-blur-sm shadow-xs transition-transform duration-300 active:scale-125 hover:scale-115 focus:outline-none ${
-                        isLoved
-                          ? "bg-rose-50 text-rose-500 scale-105"
-                          : "bg-white/80 text-foreground/50 hover:text-rose-500 hover:bg-white"
-                      }`}
-                    >
-                      <Heart
-                        className={`h-4 w-4 ${isLoved ? "fill-rose-500 stroke-rose-500" : "stroke-current"}`}
-                      />
-                    </button>
-
-                    {/* Image Container with Native Portrait Ratio */}
-                    <div className="relative overflow-hidden rounded-xl bg-muted/50">
-                      {!loaded.has(i) && (
-                        <div className="flex aspect-[9/16] w-full items-center justify-center bg-muted/70 animate-pulse">
-                          <span className="text-3xl">🌸</span>
-                        </div>
-                      )}
-                      <img
-                        src={p.src}
-                        alt={p.alt}
-                        loading="lazy"
-                        onLoad={() => setLoaded((prev) => new Set(prev).add(i))}
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = assetUrl("/images/photo.jpg");
-                          setLoaded((prev) => new Set(prev).add(i));
-                        }}
-                        className={`w-full object-cover transition-all duration-500 group-hover:scale-105 ${
-                          loaded.has(i) ? "opacity-100" : "opacity-0"
-                        }`}
-                      />
-                    </div>
-
-                    {/* Authentic Polaroid Paper Chin (Captions never cover the image) */}
-                    <div className="mt-3 px-1 text-center">
-                      <p className="font-script text-xl leading-snug text-foreground md:text-2xl line-clamp-2">
-                        {p.caption}
-                      </p>
-                      <div className="mt-1 flex items-center justify-center gap-1.5 text-[11px] font-semibold tracking-widest text-muted-foreground uppercase">
-                        <span>MEM #{(i + 1).toString().padStart(2, "0")}</span>
-                        {isLoved && <span className="text-xs">💖</span>}
-                      </div>
-                    </div>
-                  </div>
                 </div>
-              </Reveal>
+
+                {/* Direct Quick Heart Reaction Button */}
+                <button
+                  type="button"
+                  aria-label={isLoved ? "Remove like" : "Like this photo"}
+                  onClick={(e) => toggleLike(e, i)}
+                  className={`pointer-events-auto flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full backdrop-blur-md shadow-xs transition-transform duration-300 active:scale-125 hover:scale-115 focus:outline-none cursor-pointer ${
+                    isLoved
+                      ? "bg-rose-500 text-white shadow-rose-500/30 shadow-sm"
+                      : "bg-background/85 text-foreground/60 hover:text-rose-500 hover:bg-background border border-border/50"
+                  }`}
+                >
+                  <Heart
+                    className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${isLoved ? "fill-current" : "stroke-current"}`}
+                  />
+                </button>
+              </div>
+
+              {/* Photo Display: GUARANTEED ZERO CROPPING (entire photo 100% visible) */}
+              <div className="relative z-10 flex flex-1 min-h-0 w-full items-center justify-center px-2.5 py-1 overflow-hidden">
+                {!loaded.has(i) && (
+                  <div className="flex h-full w-full items-center justify-center animate-pulse">
+                    <span className="text-3xl">🌸</span>
+                  </div>
+                )}
+                <img
+                  src={p.src}
+                  alt={p.alt}
+                  loading="lazy"
+                  onLoad={() => setLoaded((prev) => new Set(prev).add(i))}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = assetUrl("/images/photo.jpg");
+                    setLoaded((prev) => new Set(prev).add(i));
+                  }}
+                  className={`max-h-full max-w-full w-auto h-auto object-contain rounded-xl drop-shadow-md select-none transition-all duration-500 group-hover:scale-[1.03] ${
+                    loaded.has(i) ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              </div>
+
+              {/* Sleek Frosted Glass Caption Chin */}
+              <div className="relative z-20 w-full bg-gradient-to-t from-background/95 via-background/80 to-transparent p-3 pt-3 sm:p-3.5 sm:pt-4 rounded-b-2xl md:rounded-b-3xl">
+                <p className="font-script text-lg sm:text-xl text-foreground font-medium leading-snug line-clamp-1 group-hover:line-clamp-2 transition-all">
+                  {p.caption}
+                </p>
+              </div>
             </div>
           );
         })}
