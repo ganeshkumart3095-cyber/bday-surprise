@@ -1,11 +1,13 @@
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter, rootRouteId } from "@tanstack/react-router";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
 
 import { routeTree } from "@/routeTree.gen";
 import { getRouter } from "@/router";
 import { assetUrl } from "@/lib/utils";
 import { birthday } from "@/config/birthday";
+import { PhotoRevealModal } from "@/components/birthday/PhotoRevealModal";
 
 describe("App routing", () => {
   it("matches a page for / instead of falling back to not found", () => {
@@ -19,6 +21,14 @@ describe("App routing", () => {
   it("getRouter initializes router with basepath", () => {
     const router = getRouter();
     expect(router.basepath).toBe(import.meta.env.BASE_URL ?? "/");
+  });
+});
+
+describe("PhotoRevealModal", () => {
+  it("renders when isOpen is true", () => {
+    const onProceed = vi.fn();
+    render(<PhotoRevealModal isOpen={true} onProceed={onProceed} />);
+    expect(screen.getByText(/Caught in 4K/i)).toBeInTheDocument();
   });
 });
 

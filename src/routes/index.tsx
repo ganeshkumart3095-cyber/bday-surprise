@@ -168,7 +168,7 @@ function Index() {
                   </motion.div>
                 )}
 
-                {stage === "cake" && (
+                {(stage === "cake" || stage === "reveal") && (
                   <motion.div
                     key="cake-cutting"
                     initial={{ opacity: 0, y: 20, scale: 0.95 }}

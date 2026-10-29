@@ -11,7 +11,7 @@ export function CakeCuttingInteraction({ onComplete }: CakeCuttingProps) {
   const [progress, setProgress] = useState(0); // 0 to 100
   const [isCut, setIsCut] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const maxDrag = 180;
+  const maxDrag = 140;
 
   const handleDrag = (
     _: unknown,
@@ -22,7 +22,8 @@ export function CakeCuttingInteraction({ onComplete }: CakeCuttingProps) {
     const currentProgress = Math.round((currentY / maxDrag) * 100);
     setProgress(currentProgress);
 
-    if (currentProgress >= 85) {
+    // Responsive trigger threshold
+    if (currentProgress >= 35 || info.offset.y >= 40) {
       triggerCutSuccess();
     }
   };
@@ -44,7 +45,7 @@ export function CakeCuttingInteraction({ onComplete }: CakeCuttingProps) {
     confetti(160);
     setTimeout(() => {
       onComplete();
-    }, 1500);
+    }, 900);
   };
 
   return (
@@ -63,15 +64,15 @@ export function CakeCuttingInteraction({ onComplete }: CakeCuttingProps) {
         </h3>
         <p className="mt-1 text-xs sm:text-sm text-muted-foreground">
           {isCut
-            ? "Your birthday wish is coming true... ✨"
+            ? "Revealing your birthday surprise... ✨"
             : "Swipe the ceremonial knife down across the cake ↓"}
         </p>
       </div>
 
       {/* Progress Bar */}
-      <div className="mb-6 w-full max-w-xs">
+      <div className="mb-5 w-full max-w-xs">
         <div className="flex justify-between text-xs font-medium text-muted-foreground mb-1">
-          <span>Cutting Progress</span>
+          <span>{isCut ? "Sliced!" : "Cutting Progress"}</span>
           <span className="font-bold text-primary">{progress}%</span>
         </div>
         <div className="h-2 w-full overflow-hidden rounded-full bg-petal">
@@ -83,7 +84,12 @@ export function CakeCuttingInteraction({ onComplete }: CakeCuttingProps) {
       </div>
 
       {/* Cake Stage */}
-      <div className="relative flex h-64 w-72 items-center justify-center">
+      <div
+        className="relative flex h-64 w-72 items-center justify-center cursor-pointer"
+        onClick={() => {
+          if (!isCut) triggerCutSuccess();
+        }}
+      >
         {/* Glow behind cake */}
         <div className="absolute inset-0 rounded-full bg-primary/10 blur-2xl" />
 
@@ -92,9 +98,9 @@ export function CakeCuttingInteraction({ onComplete }: CakeCuttingProps) {
           {/* Left Cake Half */}
           <motion.div
             animate={
-              isCut ? { x: -32, rotate: -4, opacity: 0.95 } : { x: 0, rotate: 0, opacity: 1 }
+              isCut ? { x: -34, rotate: -4, opacity: 0.95 } : { x: 0, rotate: 0, opacity: 1 }
             }
-            transition={{ type: "spring", stiffness: 200, damping: 18 }}
+            transition={{ type: "spring", stiffness: 220, damping: 16 }}
             className="relative overflow-hidden w-28 h-52 flex flex-col items-end justify-end pr-[1px]"
           >
             {/* Candles Top */}
@@ -148,8 +154,8 @@ export function CakeCuttingInteraction({ onComplete }: CakeCuttingProps) {
 
           {/* Right Cake Half */}
           <motion.div
-            animate={isCut ? { x: 32, rotate: 4, opacity: 0.95 } : { x: 0, rotate: 0, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 200, damping: 18 }}
+            animate={isCut ? { x: 34, rotate: 4, opacity: 0.95 } : { x: 0, rotate: 0, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 220, damping: 16 }}
             className="relative overflow-hidden w-28 h-52 flex flex-col items-start justify-end pl-[1px]"
           >
             {/* Candles Top */}
@@ -200,8 +206,8 @@ export function CakeCuttingInteraction({ onComplete }: CakeCuttingProps) {
               dragConstraints={{ top: 0, bottom: maxDrag }}
               dragElastic={0.05}
               onDrag={handleDrag}
-              onDragEnd={() => {
-                if (progress >= 70) {
+              onDragEnd={(_: unknown, info: { offset: { y: number } }) => {
+                if (info.offset.y > 20 || progress > 20) {
                   triggerCutSuccess();
                 }
               }}
@@ -222,13 +228,24 @@ export function CakeCuttingInteraction({ onComplete }: CakeCuttingProps) {
                 </div>
                 {/* Glowing Drag Tip Prompt */}
                 <div className="mt-1 flex items-center gap-1 rounded-full bg-primary/95 px-2.5 py-0.5 text-[10px] font-semibold text-primary-foreground shadow-md animate-bounce">
-                  <span>Drag Down 🔪</span>
+                  <span>Swipe Down 🔪</span>
                 </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+
+      {/* Celebratory message when cut */}
+      {isCut && (
+        <motion.p
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-3 font-script text-2xl text-primary animate-pulse"
+        >
+          🎉 Cake sliced! Loading your surprise... 🎁
+        </motion.p>
+      )}
 
       {/* Alternative Tap Action (Ensures 100% accessibility on any screen) */}
       {!isCut && (
@@ -238,12 +255,12 @@ export function CakeCuttingInteraction({ onComplete }: CakeCuttingProps) {
               heartBurst(e.clientX, e.clientY);
               triggerCutSuccess();
             }}
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-500 to-primary px-6 py-2.5 text-sm font-semibold text-white shadow-soft transition-transform hover:scale-105 active:scale-95"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-500 to-primary px-6 py-2.5 text-sm font-semibold text-white shadow-soft transition-transform hover:scale-105 active:scale-95 cursor-pointer"
           >
             <Cake className="h-4 w-4" /> Tap to Slice the Cake
           </button>
           <span className="mt-1 text-[11px] text-muted-foreground">
-            (You can drag the knife or simply tap above)
+            (You can swipe the knife or simply tap above)
           </span>
         </div>
       )}
