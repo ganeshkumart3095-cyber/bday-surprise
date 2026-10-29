@@ -124,10 +124,10 @@ export function PhotoRevealModal({ isOpen, onProceed }: PhotoRevealModalProps) {
 
               <div className="flex flex-col items-center">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-petal px-3.5 py-1 text-xs font-semibold text-primary">
-                  <Sparkles className="h-3.5 w-3.5" /> 🎂 HAPPY BIRTHDAY SURPRISE ✨
+                  <Sparkles className="h-3.5 w-3.5" /> 👑 HAPPY BIRTHDAY PRINCESS ✨
                 </span>
                 <h2 className="mt-2 font-script text-3xl sm:text-4xl text-primary leading-tight">
-                  Happy Birthday, Thangachii! 🎂🎉
+                  Happy Birthday, Princess! 🎂👑
                 </h2>
                 <p className="mt-1 text-xs sm:text-sm text-muted-foreground">
                   The sweetest sister with the brightest smile in the whole world!
@@ -144,12 +144,12 @@ export function PhotoRevealModal({ isOpen, onProceed }: PhotoRevealModalProps) {
                 <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-muted shadow-inner">
                   <img
                     src={birthday.revealPhoto}
-                    alt="Happy Birthday Thangachii with Anna"
+                    alt="Happy Birthday Princess with Anna"
                     className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                   />
                 </div>
                 <p className="mt-2.5 text-center font-script text-xl sm:text-2xl text-primary">
-                  Anna & Thangachii Forever 🫂💗
+                  Anna & Princess Forever 🫂👑
                 </p>
               </motion.div>
 

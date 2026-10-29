@@ -38,9 +38,9 @@ describe("PhotoRevealModal", () => {
     const onProceed = vi.fn();
     render(<PhotoRevealModal isOpen={true} onProceed={onProceed} />);
     expect(
-      screen.getByRole("heading", { name: /Happy Birthday, Thangachii!/i }),
+      screen.getByRole("heading", { name: /Happy Birthday, Princess!/i }),
     ).toBeInTheDocument();
-    expect(screen.getByAltText(/Happy Birthday Thangachii with Anna/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/Happy Birthday Princess with Anna/i)).toBeInTheDocument();
   });
 });
 
@@ -53,11 +53,11 @@ describe("FinalWish with Grand Finale Funny Photo & Heartfelt Message", () => {
     fireEvent.click(blowBtn);
 
     // Funny photo modal appears with Caught in 4K and Anna's message
-    expect(screen.getByText(/Caught in 4K, Thangachii!/i)).toBeInTheDocument();
+    expect(screen.getByText(/Caught in 4K, Princess!/i)).toBeInTheDocument();
     expect(
       screen.getByText(/This is the happiness after all those emotions!/i),
     ).toBeInTheDocument();
-    expect(screen.getByAltText(/Caught in 4K Thangachii/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/Caught in 4K Princess/i)).toBeInTheDocument();
   });
 });
 
@@ -70,7 +70,7 @@ describe("Videos infinite film strip carousel", () => {
 
   it("renders video cards with titles and play buttons", () => {
     render(<Videos />);
-    expect(screen.getAllByText(birthday.videos[0].title).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(birthday.videos[0]!.title).length).toBeGreaterThan(0);
   });
 
   it("opens fullscreen video modal on card click and closes on close button", () => {
@@ -79,21 +79,22 @@ describe("Videos infinite film strip carousel", () => {
     expect(playButtons.length).toBeGreaterThan(0);
 
     // Click first video card
-    fireEvent.click(playButtons[0]);
+    if (playButtons[0]) fireEvent.click(playButtons[0]);
 
     // Modal dialog is open
     expect(screen.getByRole("dialog")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Close video player/i })).toBeInTheDocument();
 
     // Click close button
-    fireEvent.click(screen.getByRole("button", { name: /Close video player/i }));
+    const closeBtn = screen.getByRole("button", { name: /Close video player/i });
+    fireEvent.click(closeBtn);
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 
   it("supports keyboard navigation with Escape key to close modal", () => {
     render(<Videos />);
     const playButtons = screen.getAllByRole("button", { name: /Play video:/i });
-    fireEvent.click(playButtons[0]);
+    if (playButtons[0]) fireEvent.click(playButtons[0]);
     expect(screen.getByRole("dialog")).toBeInTheDocument();
 
     // Press Escape

@@ -60,7 +60,7 @@ export function CakeCuttingInteraction({ onComplete }: CakeCuttingProps) {
           <Sparkles className="h-3.5 w-3.5" /> Special Moment
         </span>
         <h3 className="mt-2 font-script text-3xl sm:text-4xl text-primary">
-          {isCut ? "Happy Birthday, Thangachii! 🎂🎉" : "Make a Wish & Cut the Cake!"}
+          {isCut ? "Happy Birthday, Princess! 🎂👑" : "Make a Wish & Cut the Cake!"}
         </h3>
         <p className="mt-1 text-xs sm:text-sm text-muted-foreground">
           {isCut

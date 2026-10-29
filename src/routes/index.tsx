@@ -18,15 +18,15 @@ import { AnimatePresence, motion } from "framer-motion";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Bday Surprise 💗" },
+      { title: "Bday Surprise for Princess 👑💗" },
       {
         name: "description",
-        content: "A little birthday surprise from Anna — memories, a letter, and lots of love.",
+        content: "A little birthday surprise for Princess from Anna — memories, a letter, and lots of love.",
       },
-      { property: "og:title", content: "Bday Surprise 💗" },
+      { property: "og:title", content: "Bday Surprise for Princess 👑💗" },
       {
         property: "og:description",
-        content: "A birthday surprise from Anna, full of memories and love.",
+        content: "A birthday surprise for Princess from Anna, full of memories and love.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

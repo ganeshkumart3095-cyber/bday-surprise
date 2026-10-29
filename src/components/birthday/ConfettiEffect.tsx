@@ -8,19 +8,18 @@ interface Props {
 
 export function ConfettiEffect({ show, duration = 5000 }: Props) {
   useEffect(() => {
-    if (show) {
-      confetti(140);
-      const interval = setInterval(() => {
-        confetti(60);
-      }, 2000);
-      const timer = setTimeout(() => {
-        clearInterval(interval);
-      }, duration);
-      return () => {
-        clearInterval(interval);
-        clearTimeout(timer);
-      };
-    }
+    if (!show) return;
+    confetti(140);
+    const interval = setInterval(() => {
+      confetti(60);
+    }, 2000);
+    const timer = setTimeout(() => {
+      clearInterval(interval);
+    }, duration);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timer);
+    };
   }, [show, duration]);
 
   return null;

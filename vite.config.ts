@@ -4,7 +4,7 @@ import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import tailwindcss from "@tailwindcss/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-const base = process.env.BASE_PATH || "/bday-surprise/";
+const base = process.env["BASE_PATH"] || "/bday-surprise/";
 
 export default defineConfig({
   base,

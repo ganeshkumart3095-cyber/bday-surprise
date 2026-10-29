@@ -173,7 +173,7 @@ function SecretPage() {
           </p>
           <p className="mt-3 text-sm sm:text-base text-muted-foreground font-sans">
             Holding your hand, sharing laughs, and being by your side — always here for you,
-            Thangachii 🫂🤍
+            Princess 👑🤍
           </p>
           <div className="mt-6">
             <Link

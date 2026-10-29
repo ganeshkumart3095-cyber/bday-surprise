@@ -14,7 +14,7 @@ export const birthday = {
   from: "Anna",
   fromTamil: "அண்ணா",
 
-  welcomeMessage: "Happy Birthday, Dear Thangachii! 🎉✨",
+  welcomeMessage: "Happy Birthday, Princess! 👑✨",
   question: "Do you know how special you are?",
   finalMessage: "May this year be your best one yet!",
 
@@ -139,7 +139,7 @@ export const birthday = {
     {
       src: assetUrl("/images/photo25.jpg"),
       alt: "Thumbs up gang",
-      caption: "Forever proud of you, Thangachii 🫂💯",
+      caption: "Forever proud of you, Princess 👑💯",
     },
     {
       src: assetUrl("/images/photo26.jpg"),
@@ -237,7 +237,7 @@ export const birthday = {
     "Naan happy-ah irundhaalum, sad-ah irundhaalum, Un kitta share panna oru comfort irukku. Sila relationships blood-la create aagathu... manasula create aagum. Apdi en life-ku kadavul random-ah anuppina oru azhagana relationship dhaan nee en thangachi🫂🫂.",
     "Inniku nee enakku just Instagram-la random-ah meet aana ponnu illa da... enakku romba precious-aana oru thangachiiii. Blood same illa, family same illa... aana paasathula endha difference-um illa🥹🥹.",
     "Unnoda happiness enakku romba mukkiyam, unaku edhu nadandhaalum naan iruppen nu solli kudutha bond idhu. 'Thangachi' nu koopidradhu oru vaarthai dhaan... aana nee en uyirukku romba nerukkamaan Oru uravu agita ma.",
-    "HAPPY BIRTHDAY MA THANGACHIII 🤍🫂",
+    "Happy Birthday Princess 👑💖",
   ],
   signature: "With all my love, your Anna 💗",
 };

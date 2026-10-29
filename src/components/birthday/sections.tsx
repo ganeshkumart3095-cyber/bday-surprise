@@ -16,8 +16,6 @@ import {
   Play,
   Film,
 } from "lucide-react";
-import { GiBirthdayCake, FaGift, FaHeart } from "react-icons/gi";
-import { IoSparkles } from "react-icons/io5";
 
 export function SectionTitle({ kicker, title }: { kicker: string; title: string }) {
   return (
@@ -660,7 +658,9 @@ export function Videos() {
     if (!el || typeof IntersectionObserver === "undefined") return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsInView(entry.isIntersecting);
+        if (entry) {
+          setIsInView(entry.isIntersecting);
+        }
       },
       { threshold: 0.1 },
     );
@@ -1005,46 +1005,6 @@ export function Letter() {
   );
 }
 
-/* ---------- Why you're special: flip cards ---------- */
-export function Reasons() {
-  const [flipped, setFlipped] = useState<Set<number>>(new Set());
-  const bgs = ["bg-petal", "bg-lavender", "bg-mint", "bg-peach"];
-  return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-      {birthday.reasons.map((r, i) => (
-        <Reveal key={i} delay={i * 100}>
-          <button
-            onClick={() =>
-              setFlipped((s) => {
-                const n = new Set(s);
-                n.has(i) ? n.delete(i) : n.add(i);
-                return n;
-              })
-            }
-            aria-label={`Reason ${i + 1}: ${r.title}`}
-            className={`flip block h-48 w-full md:h-56 cursor-pointer ${flipped.has(i) ? "on" : ""}`}
-          >
-            <div className="flip-inner h-full">
-              <div
-                className={`flip-face flex flex-col items-center justify-center rounded-2xl ${bgs[i % 4]} shadow-soft`}
-              >
-                <span className="text-5xl">{r.emoji}</span>
-                <span className="mt-2 text-sm font-semibold text-muted-foreground">
-                  Reason #{i + 1} · tap
-                </span>
-              </div>
-              <div className="flip-face flip-back flex flex-col items-center justify-center rounded-2xl bg-card p-4 text-center shadow-soft">
-                <h3 className="font-script text-2xl text-primary md:text-3xl">{r.title}</h3>
-                <p className="mt-1 text-sm md:text-base">{r.text}</p>
-              </div>
-            </div>
-          </button>
-        </Reveal>
-      ))}
-    </div>
-  );
-}
-
 /* ---------- Final: Make a Wish with the Layered Celebration Cake ---------- */
 export function FinalWish() {
   const [blown, setBlown] = useState(false);
@@ -1106,10 +1066,10 @@ export function FinalWish() {
               {/* Badge & Title */}
               <div className="flex flex-col items-center">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-petal px-3.5 py-1 text-xs font-semibold text-primary">
-                  <Sparkles className="h-3.5 w-3.5" /> 📸 SURPRISE GRAND FINALE 🤪
+                  <Sparkles className="h-3.5 w-3.5" /> 👑 SURPRISE GRAND FINALE 🤪
                 </span>
                 <h3 className="mt-2.5 font-script text-3xl sm:text-4xl text-primary leading-tight">
-                  Caught in 4K, Thangachii! 😂💖
+                  Caught in 4K, Princess! 😂👑
                 </h3>
                 <p className="mt-1 text-xs sm:text-sm text-muted-foreground">
                   Pure happiness & laughter after all those emotions!
@@ -1126,12 +1086,12 @@ export function FinalWish() {
                 <div className="relative aspect-square overflow-hidden rounded-xl bg-muted shadow-inner">
                   <img
                     src={birthday.funnyPhoto}
-                    alt="Caught in 4K Thangachii"
+                    alt="Caught in 4K Princess"
                     className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                   />
                 </div>
                 <p className="mt-2.5 text-center font-script text-xl sm:text-2xl text-primary">
-                  The One & Only Goofy Queen 👑✨
+                  The One & Only Birthday Princess 👑✨
                 </p>
               </motion.div>
 
@@ -1141,13 +1101,13 @@ export function FinalWish() {
                   "This is the happiness after all those emotions! 🥹💖"
                 </p>
                 <p className="mt-2.5 text-xs sm:text-sm text-foreground/90 leading-relaxed text-center">
-                  I want you to be happy like this forever and ever, Thangachii. Laughing out loud
+                  I want you to be happy like this forever and ever, Princess. Laughing out loud
                   without holding back, smiling freely without a single worry in the world. Whatever
                   comes in life, no matter where we are, your Anna will always be right here behind
                   you to protect your smile and cheer for every dream of yours.
                 </p>
                 <p className="mt-3 text-center font-script text-xl sm:text-2xl text-rose-500 font-semibold">
-                  Stay blessed, stay crazy, stay this happy forever! 🤍🫂
+                  Stay blessed, stay crazy, stay this happy forever, Princess! 👑🤍🫂
                 </p>
               </div>
 
@@ -1194,7 +1154,7 @@ export function FinalWish() {
               className="inline-flex items-center gap-2 rounded-full bg-petal px-5 py-2 text-sm font-semibold text-primary border border-primary/20 shadow-soft transition-all hover:scale-105 active:scale-95 cursor-pointer"
             >
               <Sparkles className="h-4 w-4" />
-              <span>View Surprise Photo & Anna's Message 📸💖</span>
+              <span>View Surprise Photo & Anna's Message 📸👑</span>
             </button>
           </Reveal>
         )}
