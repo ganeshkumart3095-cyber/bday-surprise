@@ -267,9 +267,8 @@ const getBentoType = (i: number): BentoType => {
   // 9: photo10 - "The best cake thief 🎂"
   // 12: photo13 - "Family photo — you stole the show"
   // 20: photo20 - "College days & golden friendships 💕"
-  // 24: photo24 - "Smiles that brighten every single day 😊"
   // 25: photo25 - "Forever proud of you, Thangachii 🫂💯"
-  if ([0, 4, 9, 12, 20, 24, 25].includes(i)) {
+  if ([0, 4, 9, 12, 20, 25].includes(i)) {
     return "big";
   }
 
@@ -279,7 +278,8 @@ const getBentoType = (i: number): BentoType => {
   // 14: photo15 (900x1600 proud Anna)
   // 15: photo16 (720x1561 late night talks)
   // 16: photo17 (720x1600 graduation glow)
-  if ([1, 6, 14, 15, 16].includes(i)) {
+  // 24: photo24 (1080x1920 portrait)
+  if ([1, 6, 14, 15, 16, 24].includes(i)) {
     return "tall";
   }
 

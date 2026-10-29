@@ -158,9 +158,19 @@ export const birthday = {
       alt: "Thumbs up gang",
       caption: "Forever proud of you, Thangachii 🫂💯",
     },
+    {
+      src: assetUrl("/images/photo26.jpg"),
+      alt: "Retro monochrome vibes",
+      caption: "Retro monochrome vibes & goofy thumbs up 👍🖤",
+    },
+    {
+      src: assetUrl("/images/photo27.jpg"),
+      alt: "Sweet companion moments",
+      caption: "Floating pink hearts & sweet companion moments 💕✨",
+    },
   ],
 
-  // 2 videos with real video clips
+  // 8 videos with real video clips
   videos: [
     {
       src: assetUrl("/videos/video1.mp4"),
@@ -173,6 +183,42 @@ export const birthday = {
       poster: "",
       title: "Celebration moments",
       caption: "Unfiltered laughter, joy, and memories.",
+    },
+    {
+      src: assetUrl("/videos/video3.mp4"),
+      poster: "",
+      title: "Cultural Night Vlog 🎤🎉",
+      caption: "Waiting for DJ & biryani — typical college festival chaos! 😂",
+    },
+    {
+      src: assetUrl("/videos/video4.mp4"),
+      poster: "",
+      title: "Dil Tu Jaan Tu 🎶",
+      caption: "Sweet college memories and favourite melodies.",
+    },
+    {
+      src: assetUrl("/videos/video5.mp4"),
+      poster: "",
+      title: "Classroom Vibes 🌸",
+      caption: "Silly filter moments and endless banter.",
+    },
+    {
+      src: assetUrl("/videos/video6.mp4"),
+      poster: "",
+      title: "Bestie Banter 👭",
+      caption: "Sharing smiles and laughs between lectures.",
+    },
+    {
+      src: assetUrl("/videos/video7.mp4"),
+      poster: "",
+      title: "Late Night Laughter 🌙",
+      caption: "Pouting, laughing, and candid fun with the squad.",
+    },
+    {
+      src: assetUrl("/videos/video8.mp4"),
+      poster: "",
+      title: "Quick Spark ✨",
+      caption: "Spontaneous joy and unstoppable energy!",
     },
   ],
 
