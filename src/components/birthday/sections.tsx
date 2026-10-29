@@ -3,6 +3,8 @@ import { birthday } from "@/config/birthday";
 import { confetti, heartBurst } from "./effects";
 import { Reveal } from "./parts";
 import { Heart, ChevronLeft, ChevronRight, X, Sparkles, Cake, RotateCcw } from "lucide-react";
+import { GiBirthdayCake, FaGift, FaHeart } from "react-icons/gi";
+import { IoSparkles } from "react-icons/io5";
 
 export function SectionTitle({ kicker, title }: { kicker: string; title: string }) {
   return (
