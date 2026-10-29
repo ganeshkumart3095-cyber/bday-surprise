@@ -4,20 +4,17 @@ import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import tailwindcss from "@tailwindcss/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
+const base = process.env.BASE_PATH || "/bday-surprise/";
+
 export default defineConfig({
-  base: "/",
-  plugins: [
-    TanStackRouterVite(),
-    react(),
-    tailwindcss(),
-    tsconfigPaths(),
-  ],
+  base,
+  plugins: [TanStackRouterVite(), react(), tailwindcss(), tsconfigPaths()],
   server: {
     port: 8080,
     strictPort: true,
   },
   // TanStack Start SSR configuration
   ssr: {
-    noExternal: ['@tanstack/react-start'],
+    noExternal: ["@tanstack/react-start"],
   },
 });
