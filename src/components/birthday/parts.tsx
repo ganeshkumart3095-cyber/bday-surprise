@@ -20,7 +20,13 @@ export function Typing({ text, className = "" }: { text: string; className?: str
   const [n, setN] = useState(0);
   useEffect(() => {
     if (n >= text.length) return;
-    const t = setTimeout(() => setN(n + 1), 70);
+    // Variable speed: slower after punctuation, faster on letters
+    const prevChar = text[n - 1];
+    const delay = prevChar === '.' || prevChar === '!' || prevChar === '?' ? 300 :
+                  prevChar === ',' || prevChar === ';' ? 200 :
+                  prevChar === ' ' ? 40 :
+                  prevChar === '…' ? 400 : 65;
+    const t = setTimeout(() => setN(n + 1), delay);
     return () => clearTimeout(t);
   }, [n, text]);
   return <span className={`${className} ${n < text.length ? "caret" : ""}`}>{Array.from(text).slice(0, n).join("")}</span>;
@@ -53,7 +59,7 @@ export function GiftIntro({ onOpen }: { onOpen: () => void }) {
     setTaps(next);
     if (next >= needed) {
       setOpened(true);
-      confetti(160);
+      confetti(180);
       setTimeout(onOpen, 1400);
     }
   };
@@ -88,13 +94,17 @@ export function YesNo({ onYes }: { onYes: () => void }) {
   const [answered, setAnswered] = useState(false);
   const run = () => {
     setTries((t) => t + 1);
-    setPos({ x: (Math.random() - 0.5) * 240, y: (Math.random() - 0.5) * 160 });
+    // Safe bounds so button never flies off-screen on small mobile phones
+    setPos({
+      x: (Math.random() - 0.5) * 140,
+      y: (Math.random() - 0.5) * 100,
+    });
   };
   const noLabels = ["No", "Nope?", "Are you sure?", "Try again 😜", "Can't catch me!", "Just say yes 💗"];
   if (answered)
     return <p className="animate-in fade-in zoom-in font-script text-3xl text-primary">Of course you are! The most special 💖</p>;
   return (
-    <div className="relative flex min-h-40 items-center justify-center gap-6">
+    <div className="relative flex min-h-40 items-center justify-center gap-6 overflow-hidden py-4">
       <button
         onClick={(e) => { setAnswered(true); confetti(); heartBurst(e.clientX, e.clientY); onYes(); }}
         className="rounded-full bg-primary px-8 py-3 text-lg font-semibold text-primary-foreground shadow-soft transition-transform hover:scale-110 active:scale-95"
@@ -113,20 +123,53 @@ export function YesNo({ onYes }: { onYes: () => void }) {
 }
 
 /* ---------- Music toggle ---------- */
-export function MusicToggle() {
+export function MusicToggle({ autoPlay = false }: { autoPlay?: boolean }) {
   const ref = useRef<HTMLAudioElement>(null);
   const [on, setOn] = useState(false);
   const [msg, setMsg] = useState("");
+
+  useEffect(() => {
+    if (autoPlay && birthday.musicSrc) {
+      ref.current?.play().then(() => setOn(true)).catch(() => {
+        // Autoplay policy prevented playback, user can still tap manually
+      });
+    }
+  }, [autoPlay]);
+
   const toggle = async () => {
     if (!birthday.musicSrc) { setMsg("Add a song in the config 🎵"); setTimeout(() => setMsg(""), 2500); return; }
-    const a = ref.current!;
-    if (on) { a.pause(); setOn(false); } else { await a.play().catch(() => {}); setOn(true); }
+    const a = ref.current;
+    if (!a) return;
+    if (on) {
+      a.pause();
+      setOn(false);
+    } else {
+      try {
+        await a.play();
+        setOn(true);
+      } catch {
+        // ignore play errors
+      }
+    }
   };
+
   return (
     <div className="fixed right-4 top-4 z-40 flex flex-row-reverse items-center gap-2 md:bottom-4 md:left-4 md:right-auto md:top-auto md:flex-row">
-      {birthday.musicSrc && <audio ref={ref} src={birthday.musicSrc} loop preload="none" />}
-      <button onClick={toggle} aria-label={on ? "Pause music" : "Play music"} className="flex h-12 w-12 items-center justify-center rounded-full bg-card text-xl shadow-soft transition-transform hover:scale-110">
-        {on ? <span className="flex items-end gap-0.5 h-5">{[0, 1, 2].map((i) => <span key={i} className="w-1 rounded bg-primary animate-pulse" style={{ height: `${8 + i * 5}px`, animationDelay: `${i * 0.2}s` }} />)}</span> : "🎵"}
+      {birthday.musicSrc && <audio ref={ref} src={birthday.musicSrc} loop preload="auto" />}
+      <button
+        onClick={toggle}
+        aria-label={on ? "Pause music" : "Play music"}
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-card/95 backdrop-blur text-xl shadow-soft transition-transform hover:scale-110 active:scale-95 border border-border/40"
+      >
+        {on ? (
+          <span className="flex items-end gap-0.5 h-5">
+            {[0, 1, 2].map((i) => (
+              <span key={i} className="w-1 rounded bg-primary animate-pulse" style={{ height: `${8 + i * 5}px`, animationDelay: `${i * 0.2}s` }} />
+            ))}
+          </span>
+        ) : (
+          "🎵"
+        )}
       </button>
       {msg && <span className="rounded-full bg-card px-3 py-1 text-sm shadow-soft">{msg}</span>}
     </div>

@@ -71,7 +71,7 @@ function Index() {
           </div>
 
           {/* chapter navigation */}
-          <nav aria-label="Chapters" className="fixed bottom-4 left-1/2 z-40 flex -translate-x-1/2 gap-1 rounded-full bg-card/90 p-1.5 shadow-soft backdrop-blur md:bottom-auto md:left-auto md:right-4 md:top-1/2 md:translate-x-0 md:-translate-y-1/2 md:flex-col">
+          <nav aria-label="Chapters" className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 z-40 flex -translate-x-1/2 gap-1 rounded-full bg-card/95 p-1.5 shadow-soft backdrop-blur-md border border-border/50 md:bottom-auto md:left-auto md:right-4 md:top-1/2 md:translate-x-0 md:-translate-y-1/2 md:flex-col">
             {CHAPTERS.map((c) => (
               <a key={c.id} href={`#${c.id}`} aria-label={c.label} aria-current={active === c.id ? "step" : undefined}
                 className={`group relative flex h-10 w-10 items-center justify-center rounded-full text-lg transition-all ${active === c.id ? "bg-petal scale-110" : "opacity-60 hover:opacity-100"}`}>
@@ -81,7 +81,7 @@ function Index() {
             ))}
           </nav>
 
-          <MusicToggle />
+          <MusicToggle autoPlay />
 
           <div className="relative z-10 mx-auto max-w-6xl px-5 pb-32">
             <section id="welcome" className="flex min-h-screen flex-col items-center justify-center text-center">
@@ -96,22 +96,22 @@ function Index() {
               <p className="mt-10 animate-bounce text-muted-foreground">Scroll down for your memories ↓</p>
             </section>
 
-            <section id="memories" className="py-24">
+            <section id="memories" className="py-32">
               <SectionTitle kicker="Chapter one" title="Our Memory Book" />
               <Gallery />
             </section>
 
-            <section id="moments" className="py-24">
+            <section id="moments" className="py-32">
               <SectionTitle kicker="Chapter two" title="Little Moments" />
               <Videos />
             </section>
 
-            <section id="letter" className="py-24">
+            <section id="letter" className="py-32">
               <SectionTitle kicker="Chapter three" title="A Letter From Anna" />
               <Letter />
             </section>
 
-            <section id="special" className="py-24">
+            <section id="special" className="py-32">
               <SectionTitle kicker="Chapter four" title="Why You're Special" />
               <Reasons />
               {/* hidden easter egg */}

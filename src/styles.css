@@ -54,7 +54,7 @@
   --secondary: oklch(0.94 0.04 350);
   --secondary-foreground: oklch(0.35 0.05 350);
   --muted: oklch(0.96 0.02 350);
-  --muted-foreground: oklch(0.52 0.03 350);
+  --muted-foreground: oklch(0.48 0.04 350);
   --accent: oklch(0.92 0.05 300);
   --accent-foreground: oklch(0.35 0.06 300);
   --destructive: oklch(0.577 0.245 27.325);
@@ -62,13 +62,13 @@
   --border: oklch(0.91 0.03 355);
   --input: oklch(0.91 0.03 355);
   --ring: oklch(0.8 0.09 0);
-  --blush: oklch(0.86 0.07 0); /* #FFB7C5-ish */
-  --petal: oklch(0.89 0.05 0); /* #FFC9D4-ish */
+  --blush: oklch(0.86 0.07 0);
+  --petal: oklch(0.89 0.05 0);
   --lavender: oklch(0.88 0.05 300);
   --mint: oklch(0.92 0.06 165);
   --peach: oklch(0.9 0.06 55);
   --cream: oklch(0.98 0.02 85);
-  --rosegold: oklch(0.72 0.08 30);
+  --rosegold: oklch(0.68 0.10 30);
   --gradient-soft: linear-gradient(160deg, var(--cream), var(--petal) 55%, var(--lavender));
   --gradient-rose: linear-gradient(135deg, var(--blush), var(--rosegold));
   --shadow-soft: 0 20px 50px -20px color-mix(in oklab, var(--primary) 45%, transparent);
@@ -107,14 +107,50 @@
   to { transform: translate(var(--dx), var(--dy)) scale(0.4); opacity: 0; }
 }
 @keyframes wiggle { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
-@keyframes flicker { 0%,100% { transform: scaleY(1) } 50% { transform: scaleY(1.15) translateY(-1px) } }
 @keyframes caret { 50% { opacity: 0; } }
+
+/* Realistic candle flame flicker */
+@keyframes flame-flicker {
+  0%, 100% {
+    transform: scale(1) rotate(-1deg);
+    filter: drop-shadow(0 0 10px rgba(255, 140, 0, 0.75));
+  }
+  25% {
+    transform: scale(1.06, 0.95) rotate(1.5deg);
+    filter: drop-shadow(0 0 16px rgba(255, 180, 0, 0.9));
+  }
+  50% {
+    transform: scale(0.96, 1.04) rotate(-2deg);
+    filter: drop-shadow(0 0 8px rgba(255, 120, 0, 0.65));
+  }
+  75% {
+    transform: scale(1.04, 1.01) rotate(1deg);
+    filter: drop-shadow(0 0 14px rgba(255, 160, 0, 0.85));
+  }
+}
+
+/* Candle smoke wisp floating up on blow */
+@keyframes smoke-float {
+  0% {
+    transform: translateY(0) scale(0.6);
+    opacity: 0.85;
+  }
+  40% {
+    transform: translateY(-18px) scale(1.1) translateX(4px);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-40px) scale(1.7) translateX(-8px);
+    opacity: 0;
+  }
+}
 
 .float-item { position: absolute; bottom: -40px; animation: float-up linear infinite; pointer-events: none; }
 .confetti { position: fixed; top: -12px; width: 9px; height: 14px; border-radius: 2px; animation: confetti-fall 3s ease-in forwards; pointer-events: none; z-index: 100; }
 .burst { position: fixed; pointer-events: none; z-index: 100; animation: burst 0.9s ease-out forwards; }
 .wiggle { animation: wiggle 1.4s ease-in-out infinite; }
-.flame { animation: flicker 0.5s ease-in-out infinite; transform-origin: bottom; }
+.flame-anim { animation: flame-flicker 1.2s ease-in-out infinite; transform-origin: bottom center; }
+.smoke-anim { animation: smoke-float 1.6s ease-out forwards; }
 .caret::after { content: "|"; margin-left: 2px; animation: caret 1s step-end infinite; }
 
 .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
@@ -129,3 +165,39 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* Responsive Typography - Scale down on mobile */
+@media (max-width: 640px) {
+  .font-script.text-7xl { font-size: 3.5rem !important; }
+  .font-script.text-6xl { font-size: 2.75rem !important; }
+  .font-script.text-5xl { font-size: 2.25rem !important; }
+  .font-script.text-4xl { font-size: 2rem !important; }
+  .font-script.text-3xl { font-size: 1.75rem !important; }
+}
+
+/* iOS Safe Area Support */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* Scoped Button Hover States (never global to avoid clobbering translate/rotate) */
+.btn-lift:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+.btn-lift:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Washi tape realism */
+.washi-tape {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.04));
+}
+
+/* Realistic Cake Sprinkles */
+.sprinkle-yellow { background-color: #ffd166; }
+.sprinkle-mint { background-color: #06d6a0; }
+.sprinkle-blue { background-color: #118ab2; }
+.sprinkle-pink { background-color: #ef476f; }
