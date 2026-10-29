@@ -19,6 +19,14 @@ describe("App routing", () => {
     expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
   });
 
+  it("matches a page for /secret instead of falling back to not found", () => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+
+    const matches = router.matchRoutes("/secret");
+
+    expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
+  });
+
   it("getRouter initializes router with basepath", () => {
     const router = getRouter();
     expect(router.basepath).toBe(import.meta.env.BASE_URL ?? "/");
@@ -92,5 +100,12 @@ describe("assetUrl and birthday media paths", () => {
     }
 
     expect(birthday.videos[0]?.src).toContain("videos/video1.mp4");
+  });
+
+  it("secret photos are segregated from main page photos", () => {
+    expect(birthday.secretPhotos.length).toBe(4);
+    for (const secret of birthday.secretPhotos) {
+      expect(birthday.photos.some((p) => p.src === secret.src)).toBe(false);
+    }
   });
 });

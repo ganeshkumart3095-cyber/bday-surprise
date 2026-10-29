@@ -116,6 +116,18 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+
+  useEffect(() => {
+    // If user enters #secret or ?secret in the browser address bar, seamlessly navigate to /secret
+    if (typeof window !== "undefined") {
+      const hash = window.location.hash.toLowerCase();
+      const search = window.location.search.toLowerCase();
+      if (hash === "#secret" || search.includes("secret")) {
+        router.navigate({ to: "/secret" });
+      }
+    }
+  }, [router]);
 
   return (
     <QueryClientProvider client={queryClient}>

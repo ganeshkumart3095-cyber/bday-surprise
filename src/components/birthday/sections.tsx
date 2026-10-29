@@ -263,23 +263,23 @@ type BentoType = "big" | "tall" | "normal";
 const getBentoType = (i: number): BentoType => {
   // Featured BIG cards (2 cols, 2 rows):
   // 0: photo1 - "The day it all began 💕" (BIG 1)
-  // 4: photo5 - 1080x1080 square "Festival vibes ✨" (BIG 5)
-  // 9: photo10 - "The best cake thief 🎂"
-  // 12: photo13 - "Family photo — you stole the show"
-  // 20: photo20 - "College days & golden friendships 💕"
-  // 25: photo25 - "Forever proud of you, Thangachii 🫂💯"
-  if ([0, 4, 9, 12, 20, 25].includes(i)) {
+  // 3: photo5 - 1080x1080 square "Festival vibes ✨" (BIG)
+  // 8: photo10 - "The best cake thief 🎂"
+  // 11: photo13 - "Family photo — you stole the show"
+  // 16: photo20 - "College days & golden friendships 💕"
+  // 21: photo25 - "Forever proud of you, Thangachii 🫂💯"
+  if ([0, 3, 8, 11, 16, 21].includes(i)) {
     return "big";
   }
 
   // TALL cards (1 col, 2 rows for tall phone screenshots & portraits):
   // 1: photo2 (1080x2340)
-  // 6: photo7 (720x1561)
-  // 14: photo15 (900x1600 proud Anna)
-  // 15: photo16 (720x1561 late night talks)
-  // 16: photo17 (720x1600 graduation glow)
-  // 24: photo24 (1080x1920 portrait)
-  if ([1, 6, 14, 15, 16, 24].includes(i)) {
+  // 2: photo4 (963x1280)
+  // 5: photo7 (720x1561)
+  // 13: photo15 (900x1600 proud Anna)
+  // 14: photo16 (720x1561 late night talks)
+  // 15: photo17 (720x1600 graduation glow)
+  if ([1, 2, 5, 13, 14, 15].includes(i)) {
     return "tall";
   }
 

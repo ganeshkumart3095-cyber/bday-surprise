@@ -39,11 +39,6 @@ export const birthday = {
       caption: "That smile could light up the whole house",
     },
     {
-      src: assetUrl("/images/photo3.jpg"),
-      alt: "Memory 3 with Thangachii",
-      caption: "Partners in crime since forever",
-    },
-    {
       src: assetUrl("/images/photo4.jpg"),
       alt: "Memory 4 with Thangachii",
       caption: "Remember this trip? I do, every bit.",
@@ -114,21 +109,6 @@ export const birthday = {
       caption: "Your graduation glow",
     },
     {
-      src: assetUrl("/images/photo18.jpg"),
-      alt: "Memory 18 with Thangachii",
-      caption: "Just being us",
-    },
-    {
-      src: assetUrl("/images/photo19.jpg"),
-      alt: "Memory 19 with Thangachii",
-      caption: "Always my favourite person",
-    },
-    {
-      src: assetUrl("/images/photo.jpg"),
-      alt: "Memory 20 with Thangachii",
-      caption: "Here's to many more memories 🌸",
-    },
-    {
       src: assetUrl("/images/photo20.jpg"),
       alt: "Campus memories with Thangachii",
       caption: "College days & golden friendships 💕",
@@ -167,6 +147,30 @@ export const birthday = {
       src: assetUrl("/images/photo27.jpg"),
       alt: "Sweet companion moments",
       caption: "Floating pink hearts & sweet companion moments 💕✨",
+    },
+  ],
+
+  // Private intimate memories (accessible ONLY via typing the secret route /secret in address bar)
+  secretPhotos: [
+    {
+      src: assetUrl("/images/photo3.jpg"),
+      alt: "Secret Memory with Thangachii",
+      caption: "Partners in crime since forever",
+    },
+    {
+      src: assetUrl("/images/photo18.jpg"),
+      alt: "Secret Memory with Thangachii",
+      caption: "Just being us 🤍",
+    },
+    {
+      src: assetUrl("/images/photo19.jpg"),
+      alt: "Secret Memory with Thangachii",
+      caption: "Always my favourite person",
+    },
+    {
+      src: assetUrl("/images/photo.jpg"),
+      alt: "Secret Memory with Thangachii",
+      caption: "Here's to many more memories 🌸",
     },
   ],
 
