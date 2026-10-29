@@ -53,12 +53,12 @@ export const birthday = {
   // The letter — one string per paragraph (5–7 is perfect).
   letter: [
     "Dear Thangachii,",
-    "From the very first day you came into our lives, everything became brighter. I didn't know it then, but I had just been given the best gift I would ever receive — a little sister who would grow up to be my best friend.",
-    "We've fought over the TV remote, the last piece of sweet, and who gets the window seat. But every single time, you were the first person I wanted to share good news with, and the first person I worried about when things were hard.",
-    "Watching you grow into the kind, brave, beautiful person you are today has been one of the proudest journeys of my life. You carry so much love in your heart, and you give it away so freely.",
-    "On the days you doubt yourself, please remember: your Anna is always in your corner. No matter how far life takes us, you'll always have a home in me.",
-    "Thank you for the laughter, the patience, the silly fights and the endless memories. I'm so grateful that out of everyone in the world, I got you.",
-    "Happy birthday, my dearest. Keep shining, keep smiling, and never stop being you.",
+    "Idhuvum oru vagaila love dhaan... aana idhu romba pure-aana, edhirpaappu illaadha love 🫂. Oru naal Instagram-la random-ah meet panna ponnu, konjam konjam-ah pesi pazhaga aarambichom. Appo lam enakku nee stranger dhaan...😅 aana naal pogapoga, unnoda care, understanding, paasam ellame en manasula oru thani idam create panniduchu🥹.",
+    "Blood relationship illa naalum, enakku nee dan en thangachiiiiii madhiri aayita🥹🥹🥹. Ippo en life-la enna nadandhaalum, mudhala nyabagam varra persons-la neeyum oruthi ma🥹💯.",
+    "Naan happy-ah irundhaalum, sad-ah irundhaalum, Un kitta share panna oru comfort irukku. Sila relationships blood-la create aagathu... manasula create aagum. Apdi en life-ku kadavul random-ah anuppina oru azhagana relationship dhaan nee en thangachi🫂🫂.",
+    "Inniku nee enakku just Instagram-la random-ah meet aana ponnu illa da... enakku romba precious-aana oru thangachiiii. Blood same illa, family same illa... aana paasathula endha difference-um illa🥹🥹.",
+    "Unnoda happiness enakku romba mukkiyam, unaku edhu nadandhaalum naan iruppen nu solli kudutha bond idhu. 'Thangachi' nu koopidradhu oru vaarthai dhaan... aana nee en uyirukku romba nerukkamaan Oru uravu agita ma.",
+    "HAPPY BIRTHDAY MA THANGACHIII 🤍🫂",
   ],
   signature: "With all my love, your Anna 💗",
 
