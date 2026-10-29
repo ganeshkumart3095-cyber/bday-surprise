@@ -10,7 +10,7 @@ interface PhotoRevealModalProps {
 }
 
 export function PhotoRevealModal({ isOpen, onProceed }: PhotoRevealModalProps) {
-  const [countdown, setCountdown] = useState(10);
+  const [countdown, setCountdown] = useState(15);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -18,7 +18,7 @@ export function PhotoRevealModal({ isOpen, onProceed }: PhotoRevealModalProps) {
   useEffect(() => {
     if (!isOpen) return;
 
-    setCountdown(10);
+    setCountdown(15);
     const audio = audioRef.current;
     if (audio) {
       audio.currentTime = 0;
