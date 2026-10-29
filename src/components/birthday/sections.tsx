@@ -1,9 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { birthday } from "@/config/birthday";
 import { assetUrl } from "@/lib/utils";
 import { confetti, heartBurst } from "./effects";
 import { Reveal } from "./parts";
-import { Heart, ChevronLeft, ChevronRight, X, Sparkles, Cake, RotateCcw } from "lucide-react";
+import {
+  Heart,
+  ChevronLeft,
+  ChevronRight,
+  X,
+  Sparkles,
+  Cake,
+  RotateCcw,
+  Play,
+  Film,
+} from "lucide-react";
 import { GiBirthdayCake, FaGift, FaHeart } from "react-icons/gi";
 import { IoSparkles } from "react-icons/io5";
 
@@ -555,67 +565,384 @@ export function Gallery() {
   );
 }
 
-/* ---------- Videos: Responsive for Vertical & Horizontal Phone Clips ---------- */
+/* ---------- Film Strip Helpers & Perforations ---------- */
+function ContainerFilmPerforations() {
+  return (
+    <div
+      aria-hidden="true"
+      className="w-full h-8 sm:h-9 bg-[#111113] border-y border-white/10 flex items-center overflow-hidden px-3 select-none pointer-events-none"
+    >
+      <div className="flex w-full items-center justify-between gap-3 shrink-0">
+        {Array.from({ length: 42 }).map((_, idx) => (
+          <div
+            key={idx}
+            className="h-3.5 sm:h-4 w-5 sm:w-6 shrink-0 rounded-[3px] bg-white/20 shadow-inner border border-black/80"
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CardFilmPerforations({ label }: { label?: string }) {
+  return (
+    <div
+      aria-hidden="true"
+      className="bg-[#141416] px-3 py-1.5 flex items-center justify-between border-y border-black/40 select-none pointer-events-none"
+    >
+      <div className="flex items-center gap-1.5 sm:gap-2">
+        {Array.from({ length: 6 }).map((_, idx) => (
+          <div
+            key={idx}
+            className="h-2.5 w-3.5 rounded-[2px] bg-white/20 shadow-inner border border-black/60"
+          />
+        ))}
+      </div>
+      {label ? (
+        <span className="text-[10px] font-mono tracking-widest text-white/50 uppercase">
+          {label}
+        </span>
+      ) : (
+        <span className="text-[9px] font-mono tracking-widest text-white/30 uppercase">
+          35MM FILM
+        </span>
+      )}
+      <div className="flex items-center gap-1.5 sm:gap-2">
+        {Array.from({ length: 6 }).map((_, idx) => (
+          <div
+            key={idx}
+            className="h-2.5 w-3.5 rounded-[2px] bg-white/20 shadow-inner border border-black/60"
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Videos: Infinite-Scrolling Film Strip Carousel + Fullscreen Player ---------- */
 export function Videos() {
-  const [errors, setErrors] = useState<Set<number>>(new Set());
-  const [loading, setLoading] = useState<Set<number>>(new Set(birthday.videos.map((_, i) => i)));
+  const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isTouched, setIsTouched] = useState(false);
+  const [isInView, setIsInView] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleVideoLoad = (index: number) => {
-    setLoading((prev) => {
-      const next = new Set(prev);
-      next.delete(index);
-      return next;
+  // Filter only videos with valid src
+  const validVideos = useMemo(() => {
+    return (birthday.videos || []).filter(
+      (v) => v && typeof v.src === "string" && v.src.trim() !== "",
+    );
+  }, []);
+
+  // Ensure base array has at least 4 items so it spans wide screens before tripling
+  const baseVideos = useMemo(() => {
+    if (validVideos.length === 0) return [];
+    let base = [...validVideos];
+    while (base.length < 4) {
+      base = [...base, ...validVideos];
+    }
+    return base;
+  }, [validVideos]);
+
+  // Tripled array for mathematically seamless infinite loop: [base, base, base]
+  const displayVideos = useMemo(() => {
+    return [...baseVideos, ...baseVideos, ...baseVideos];
+  }, [baseVideos]);
+
+  // Scroll duration: 5 seconds per item in base array (minimum 12s)
+  const duration = Math.max(12, baseVideos.length * 5);
+
+  // IntersectionObserver to pause animation when scrolled out of view (saves battery/GPU)
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Fullscreen modal navigation
+  const navigateVideo = (delta: number) => {
+    setSelectedVideo((curr) => {
+      if (curr === null) return null;
+      return (curr + delta + validVideos.length) % validVideos.length;
     });
   };
 
-  const handleVideoError = (index: number) => {
-    setErrors((prev) => new Set(prev).add(index));
-    setLoading((prev) => {
-      const next = new Set(prev);
-      next.delete(index);
-      return next;
-    });
-  };
+  // Keyboard navigation for modal (Escape, Left, Right)
+  useEffect(() => {
+    if (selectedVideo === null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedVideo(null);
+      if (e.key === "ArrowRight") navigateVideo(1);
+      if (e.key === "ArrowLeft") navigateVideo(-1);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedVideo, validVideos.length]);
+
+  // Auto-pause background music while video modal is active
+  useEffect(() => {
+    if (selectedVideo !== null) {
+      const audioElements = document.querySelectorAll("audio");
+      audioElements.forEach((audio) => {
+        try {
+          audio.pause();
+        } catch {
+          // ignore
+        }
+      });
+    }
+  }, [selectedVideo]);
+
+  // Empty state handling
+  if (validVideos.length === 0) {
+    return (
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-[#18181b] via-[#232328] to-[#18181b] border border-white/10 shadow-2xl p-6 sm:p-10 text-center text-white">
+        <ContainerFilmPerforations />
+        <div className="py-12 flex flex-col items-center justify-center">
+          <Film className="h-16 w-16 text-rose-300 animate-pulse mb-4" />
+          <h3 className="font-script text-3xl sm:text-4xl text-rose-200">Our Video Memories</h3>
+          <p className="mt-2 text-sm text-gray-400 max-w-md mx-auto">
+            Special video clips are being developed in the studio 🎬 Check back soon!
+          </p>
+        </div>
+        <ContainerFilmPerforations />
+      </div>
+    );
+  }
+
+  const isAnimationPaused = !isInView || isHovered || isTouched || selectedVideo !== null;
 
   return (
-    <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
-      {birthday.videos.map((v, i) => (
-        <Reveal key={i} delay={i * 150}>
-          <div className="overflow-hidden rounded-2xl bg-card shadow-soft border border-border/40 flex flex-col">
-            {v.src && !errors.has(i) ? (
-              <div className="relative flex justify-center bg-black/5 overflow-hidden">
-                {loading.has(i) && (
-                  <div className="absolute inset-0 bg-muted animate-pulse flex items-center justify-center min-h-[300px]">
-                    <span className="text-5xl">🎬</span>
+    <>
+      {/* Component-scoped CSS for infinite scroll keyframes & pause rules */}
+      <style>{`
+        @keyframes filmScroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-33.333333%);
+          }
+        }
+        .film-carousel-track:hover {
+          animation-play-state: paused !important;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .film-carousel-track {
+            animation: none !important;
+            overflow-x: auto;
+          }
+        }
+      `}</style>
+
+      {/* Film Strip Aesthetic Container */}
+      <div
+        ref={containerRef}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onTouchStart={() => setIsTouched((prev) => !prev)}
+        className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-b from-[#18181b] via-[#232328] to-[#18181b] border border-white/10 shadow-2xl py-6 sm:py-8 my-6"
+      >
+        {/* Top Film Perforation Border */}
+        <ContainerFilmPerforations />
+
+        {/* Film Reel Section Header */}
+        <div className="text-center pt-8 pb-6 px-4">
+          <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.3em] text-rosegold mb-2">
+            Special Footage
+          </p>
+          <h3 className="font-script text-3xl sm:text-4xl md:text-5xl text-white flex items-center justify-center gap-2 sm:gap-3">
+            <span>🎬</span>
+            <span className="bg-gradient-to-r from-rose-200 via-pink-100 to-rose-200 bg-clip-text text-transparent">
+              Our Video Memories
+            </span>
+            <span>🎬</span>
+          </h3>
+          <p className="mt-2 text-xs sm:text-sm text-gray-400 font-medium flex items-center justify-center gap-2">
+            <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            Hover to pause • Click to watch
+          </p>
+        </div>
+
+        {/* Carousel Viewport (Overflow Hidden) */}
+        <div className="relative w-full overflow-hidden py-4">
+          {/* Edge Fade Gradients for Cinematic Vignette */}
+          <div
+            aria-hidden="true"
+            className="absolute left-0 inset-y-0 w-8 sm:w-16 bg-gradient-to-r from-[#18181b] to-transparent z-20 pointer-events-none"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute right-0 inset-y-0 w-8 sm:w-16 bg-gradient-to-l from-[#18181b] to-transparent z-20 pointer-events-none"
+          />
+
+          {/* Infinite Track with seamless CSS translateX translation */}
+          <div
+            className="film-carousel-track flex gap-5 w-max will-change-transform px-4"
+            style={{
+              animation: `filmScroll ${duration}s linear infinite`,
+              animationPlayState: isAnimationPaused ? "paused" : "running",
+            }}
+          >
+            {displayVideos.map((v, i) => {
+              // Find the original index in validVideos for modal selection
+              const originalIndex = validVideos.findIndex(
+                (original) => original.src === v.src && original.title === v.title,
+              );
+              const activeIndex = originalIndex >= 0 ? originalIndex : 0;
+
+              return (
+                <div
+                  key={`${v.src}-${i}`}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Play video: ${v.title}`}
+                  onClick={() => setSelectedVideo(activeIndex)}
+                  onKeyDown={(e) =>
+                    (e.key === "Enter" || e.key === " ") && setSelectedVideo(activeIndex)
+                  }
+                  className="group relative flex flex-col w-[280px] sm:w-[300px] md:w-[320px] h-[400px] sm:h-[430px] shrink-0 rounded-2xl bg-card border border-white/10 shadow-xl overflow-hidden cursor-pointer transition-all duration-300 ease-out hover:scale-[1.04] hover:shadow-2xl hover:border-primary/40 focus-visible:ring-4 focus-visible:ring-ring focus:outline-none"
+                >
+                  {/* Top Film Perforation Strip */}
+                  <CardFilmPerforations
+                    label={`REEL #${(activeIndex + 1).toString().padStart(2, "0")}`}
+                  />
+
+                  {/* Video Thumbnail Container with Hover Play Button */}
+                  <div className="relative flex-1 min-h-[200px] w-full bg-black/90 overflow-hidden flex items-center justify-center">
+                    <video
+                      src={`${v.src}#t=0.001`}
+                      poster={v.poster ? assetUrl(v.poster) : undefined}
+                      preload="metadata"
+                      muted
+                      playsInline
+                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 pointer-events-none"
+                    />
+
+                    {/* Dark Hover Overlay + Glowing Play Button */}
+                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/55 transition-all duration-300 flex items-center justify-center">
+                      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-rose-500/90 text-white shadow-lg backdrop-blur-xs transition-all duration-300 group-hover:scale-115 group-hover:bg-rose-500 group-hover:shadow-rose-500/50">
+                        <Play className="h-6 w-6 translate-x-0.5 fill-current" />
+                      </div>
+                    </div>
+
+                    {/* Film Clip Tag */}
+                    <div className="absolute top-2.5 left-2.5 rounded-full bg-black/60 backdrop-blur-xs px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-white/90 uppercase border border-white/20">
+                      ▶ Video
+                    </div>
                   </div>
-                )}
-                <video
-                  src={v.src}
-                  poster={v.poster ? assetUrl(v.poster) : undefined}
-                  controls
-                  playsInline
-                  preload="metadata"
-                  onLoadedData={() => handleVideoLoad(i)}
-                  onError={() => handleVideoError(i)}
-                  className="max-h-[480px] w-auto max-w-full rounded-t-2xl object-contain bg-black/10"
-                />
-              </div>
-            ) : (
-              <div className="flex min-h-[280px] w-full flex-col items-center justify-center bg-soft text-center p-6">
-                <span className="text-5xl">{errors.has(i) ? "⚠️" : "🎬"}</span>
-                <p className="mt-3 text-base text-muted-foreground font-medium">
-                  {errors.has(i) ? "Video unavailable" : "Video coming soon"}
+
+                  {/* Title & Caption */}
+                  <div className="p-4 bg-card flex flex-col justify-center min-h-[88px] border-t border-border/30">
+                    <h4 className="font-script text-2xl text-primary font-semibold truncate group-hover:text-rose-500 transition-colors">
+                      {v.title}
+                    </h4>
+                    <p className="mt-0.5 text-xs sm:text-sm text-muted-foreground line-clamp-2">
+                      {v.caption}
+                    </p>
+                  </div>
+
+                  {/* Bottom Film Perforation Strip */}
+                  <CardFilmPerforations />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Bottom Film Perforation Border */}
+        <ContainerFilmPerforations />
+      </div>
+
+      {/* Fullscreen Video Modal */}
+      {selectedVideo !== null && validVideos[selectedVideo] && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Playing video: ${validVideos[selectedVideo].title}`}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-3 sm:p-4 md:p-6 animate-in fade-in duration-300"
+          onClick={() => setSelectedVideo(null)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-4xl w-full flex flex-col items-center rounded-2xl md:rounded-3xl bg-[#18181b] border border-white/15 shadow-2xl p-4 sm:p-6 overflow-hidden animate-in zoom-in-95 duration-300"
+          >
+            {/* Close Button */}
+            <button
+              type="button"
+              aria-label="Close video player"
+              onClick={() => setSelectedVideo(null)}
+              className="absolute right-3.5 top-3.5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all hover:bg-white/25 hover:scale-110 active:scale-95 focus:outline-none cursor-pointer"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            {/* Video Player Container */}
+            <div className="relative w-full flex items-center justify-center rounded-xl overflow-hidden bg-black max-h-[68vh]">
+              <video
+                key={validVideos[selectedVideo].src}
+                src={validVideos[selectedVideo].src}
+                poster={
+                  validVideos[selectedVideo].poster
+                    ? assetUrl(validVideos[selectedVideo].poster)
+                    : undefined
+                }
+                controls
+                autoPlay
+                playsInline
+                className="max-h-[68vh] w-auto max-w-full rounded-xl object-contain shadow-lg"
+              />
+            </div>
+
+            {/* Title & Caption Bar */}
+            <div className="mt-4 flex w-full flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-1 text-left">
+              <div>
+                <h4 className="font-script text-2xl sm:text-3xl text-rose-300 font-semibold">
+                  {validVideos[selectedVideo].title}
+                </h4>
+                <p className="text-xs sm:text-sm text-gray-300 mt-0.5">
+                  {validVideos[selectedVideo].caption}
                 </p>
               </div>
-            )}
-            <div className="p-5">
-              <h3 className="font-script text-3xl text-primary">{v.title}</h3>
-              <p className="mt-1 text-muted-foreground">{v.caption}</p>
+              <div className="flex items-center gap-2 text-xs font-mono text-gray-400 shrink-0">
+                <span className="rounded-full bg-white/10 px-2.5 py-1 border border-white/10">
+                  CLIP {selectedVideo + 1} OF {validVideos.length}
+                </span>
+              </div>
             </div>
+
+            {/* Floating Navigation Arrows */}
+            {validVideos.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  aria-label="Previous video"
+                  onClick={() => navigateVideo(-1)}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 hidden md:flex h-11 w-11 items-center justify-center rounded-full bg-black/60 text-white border border-white/20 backdrop-blur-sm shadow-lg transition-transform hover:scale-110 active:scale-95 focus:outline-none cursor-pointer"
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next video"
+                  onClick={() => navigateVideo(1)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 hidden md:flex h-11 w-11 items-center justify-center rounded-full bg-black/60 text-white border border-white/20 backdrop-blur-sm shadow-lg transition-transform hover:scale-110 active:scale-95 focus:outline-none cursor-pointer"
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </button>
+              </>
+            )}
           </div>
-        </Reveal>
-      ))}
-    </div>
+        </div>
+      )}
+    </>
   );
 }
 
