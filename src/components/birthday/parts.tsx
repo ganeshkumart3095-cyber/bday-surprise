@@ -3,16 +3,31 @@ import { birthday } from "@/config/birthday";
 import { confetti, heartBurst } from "./effects";
 
 /* ---------- Scroll reveal wrapper ---------- */
-export function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+export function Reveal({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => e?.isIntersecting && (el.classList.add("in"), io.disconnect()), { threshold: 0.15 });
+    const io = new IntersectionObserver(
+      ([e]) => e?.isIntersecting && (el.classList.add("in"), io.disconnect()),
+      { threshold: 0.15 },
+    );
     io.observe(el);
     return () => io.disconnect();
   }, []);
-  return <div ref={ref} className={`reveal ${className}`} style={{ transitionDelay: `${delay}ms` }}>{children}</div>;
+  return (
+    <div ref={ref} className={`reveal ${className}`} style={{ transitionDelay: `${delay}ms` }}>
+      {children}
+    </div>
+  );
 }
 
 /* ---------- Typing text ---------- */
@@ -22,27 +37,58 @@ export function Typing({ text, className = "" }: { text: string; className?: str
     if (n >= text.length) return;
     // Variable speed: slower after punctuation, faster on letters
     const prevChar = text[n - 1];
-    const delay = prevChar === '.' || prevChar === '!' || prevChar === '?' ? 300 :
-                  prevChar === ',' || prevChar === ';' ? 200 :
-                  prevChar === ' ' ? 40 :
-                  prevChar === '…' ? 400 : 65;
+    const delay =
+      prevChar === "." || prevChar === "!" || prevChar === "?"
+        ? 300
+        : prevChar === "," || prevChar === ";"
+          ? 200
+          : prevChar === " "
+            ? 40
+            : prevChar === "…"
+              ? 400
+              : 65;
     const t = setTimeout(() => setN(n + 1), delay);
     return () => clearTimeout(t);
   }, [n, text]);
-  return <span className={`${className} ${n < text.length ? "caret" : ""}`}>{Array.from(text).slice(0, n).join("")}</span>;
+  return (
+    <span className={`${className} ${n < text.length ? "caret" : ""}`}>
+      {Array.from(text).slice(0, n).join("")}
+    </span>
+  );
 }
 
 /* ---------- Floating hearts background ---------- */
 export function FloatingBits() {
-  const [items, setItems] = useState<{ l: number; d: number; s: number; delay: number; c: string }[]>([]);
+  const [items, setItems] = useState<
+    { l: number; d: number; s: number; delay: number; c: string }[]
+  >([]);
   useEffect(() => {
     const sym = ["💗", "🌸", "✨", "💕", "🎀", "⭐"];
-    setItems(Array.from({ length: 16 }, () => ({ l: Math.random() * 100, d: 12 + Math.random() * 14, s: 14 + Math.random() * 16, delay: -Math.random() * 20, c: sym[Math.floor(Math.random() * sym.length)]! })));
+    setItems(
+      Array.from({ length: 16 }, () => ({
+        l: Math.random() * 100,
+        d: 12 + Math.random() * 14,
+        s: 14 + Math.random() * 16,
+        delay: -Math.random() * 20,
+        c: sym[Math.floor(Math.random() * sym.length)]!,
+      })),
+    );
   }, []);
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
       {items.map((it, i) => (
-        <span key={i} className="float-item" style={{ left: `${it.l}%`, fontSize: it.s, animationDuration: `${it.d}s`, animationDelay: `${it.delay}s` }}>{it.c}</span>
+        <span
+          key={i}
+          className="float-item"
+          style={{
+            left: `${it.l}%`,
+            fontSize: it.s,
+            animationDuration: `${it.d}s`,
+            animationDelay: `${it.delay}s`,
+          }}
+        >
+          {it.c}
+        </span>
       ))}
     </div>
   );
@@ -65,13 +111,21 @@ export function GiftIntro({ onOpen }: { onOpen: () => void }) {
   };
   const hints = ["Tap the gift 🎁", "Again… it's wiggling!", "One more tap! 💗", "Opening…"];
   return (
-    <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-soft px-6 text-center transition-opacity duration-700 ${opened ? "opacity-0 delay-700" : ""}`}>
+    <div
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-soft px-6 text-center transition-opacity duration-700 ${opened ? "opacity-0 delay-700" : ""}`}
+    >
       <p className="font-script text-2xl text-primary md:text-3xl">A little surprise for</p>
       <h1 className="font-script text-6xl text-rose-gradient md:text-8xl">{birthday.name}</h1>
       <p className="mb-10 text-lg text-muted-foreground">{birthday.nameTamil}</p>
-      <button onClick={tap} aria-label="Open your gift" className={`relative h-48 w-48 cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-ring rounded-2xl ${taps > 0 && !opened ? "wiggle" : ""}`}>
+      <button
+        onClick={tap}
+        aria-label="Open your gift"
+        className={`relative h-48 w-48 cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-ring rounded-2xl ${taps > 0 && !opened ? "wiggle" : ""}`}
+      >
         {/* lid */}
-        <div className={`absolute left-[-8%] top-6 z-10 h-12 w-[116%] rounded-xl bg-rose shadow-soft transition-all duration-700 ${opened ? "-translate-y-40 rotate-[-25deg] opacity-0" : ""}`}>
+        <div
+          className={`absolute left-[-8%] top-6 z-10 h-12 w-[116%] rounded-xl bg-rose shadow-soft transition-all duration-700 ${opened ? "-translate-y-40 rotate-[-25deg] opacity-0" : ""}`}
+        >
           <div className="absolute left-1/2 top-0 h-full w-6 -translate-x-1/2 bg-lavender" />
           <div className="absolute -top-8 left-1/2 -translate-x-1/2 text-5xl">🎀</div>
         </div>
@@ -81,8 +135,17 @@ export function GiftIntro({ onOpen }: { onOpen: () => void }) {
         </div>
         {opened && <div className="absolute inset-x-0 top-10 animate-in zoom-in text-6xl">💖</div>}
       </button>
-      <p className="mt-10 text-lg font-medium text-foreground" aria-live="polite">{hints[Math.min(taps, 3)]}</p>
-      <div className="mt-3 flex gap-2">{Array.from({ length: needed }, (_, i) => <span key={i} className={`h-2 w-8 rounded-full transition-colors ${i < taps ? "bg-primary" : "bg-border"}`} />)}</div>
+      <p className="mt-10 text-lg font-medium text-foreground" aria-live="polite">
+        {hints[Math.min(taps, 3)]}
+      </p>
+      <div className="mt-3 flex gap-2">
+        {Array.from({ length: needed }, (_, i) => (
+          <span
+            key={i}
+            className={`h-2 w-8 rounded-full transition-colors ${i < taps ? "bg-primary" : "bg-border"}`}
+          />
+        ))}
+      </div>
     </div>
   );
 }
@@ -100,24 +163,51 @@ export function YesNo({ onYes }: { onYes: () => void }) {
       y: (Math.random() - 0.5) * 100,
     });
   };
-  const noLabels = ["No", "Nope?", "Are you sure?", "Try again 😜", "Can't catch me!", "Just say yes 💗"];
+  const noLabels = [
+    "No",
+    "Nope?",
+    "Are you sure?",
+    "Try again 😜",
+    "Can't catch me!",
+    "Just say yes 💗",
+  ];
+  const handleYes = (e: React.MouseEvent) => {
+    setAnswered(true);
+    confetti();
+    heartBurst(e.clientX, e.clientY);
+    setTimeout(() => {
+      onYes();
+    }, 1200);
+  };
+
   if (answered)
-    return <p className="animate-in fade-in zoom-in font-script text-3xl text-primary">Of course you are! The most special 💖</p>;
+    return (
+      <p className="animate-in fade-in zoom-in font-script text-3xl text-primary">
+        Of course you are! The most special 💖
+      </p>
+    );
   return (
     <div className="relative flex min-h-40 items-center justify-center gap-6 overflow-hidden py-4">
       <button
-        onClick={(e) => { setAnswered(true); confetti(); heartBurst(e.clientX, e.clientY); onYes(); }}
+        onClick={handleYes}
         className="rounded-full bg-primary px-8 py-3 text-lg font-semibold text-primary-foreground shadow-soft transition-transform hover:scale-110 active:scale-95"
         style={{ transform: `scale(${1 + Math.min(tries, 6) * 0.08})` }}
-      >Yes! 💗</button>
+      >
+        Yes! 💗
+      </button>
       <button
         onMouseEnter={run}
-        onTouchStart={(e) => { e.preventDefault(); run(); }}
+        onTouchStart={(e) => {
+          e.preventDefault();
+          run();
+        }}
         onFocus={run}
         onClick={run}
         className="rounded-full border-2 border-border bg-card px-6 py-3 font-semibold text-muted-foreground transition-transform duration-300"
         style={{ transform: `translate(${pos.x}px, ${pos.y}px)` }}
-      >{noLabels[Math.min(tries, noLabels.length - 1)]}</button>
+      >
+        {noLabels[Math.min(tries, noLabels.length - 1)]}
+      </button>
     </div>
   );
 }
@@ -130,14 +220,21 @@ export function MusicToggle({ autoPlay = false }: { autoPlay?: boolean }) {
 
   useEffect(() => {
     if (autoPlay && birthday.musicSrc) {
-      ref.current?.play().then(() => setOn(true)).catch(() => {
-        // Autoplay policy prevented playback, user can still tap manually
-      });
+      ref.current
+        ?.play()
+        .then(() => setOn(true))
+        .catch(() => {
+          // Autoplay policy prevented playback, user can still tap manually
+        });
     }
   }, [autoPlay]);
 
   const toggle = async () => {
-    if (!birthday.musicSrc) { setMsg("Add a song in the config 🎵"); setTimeout(() => setMsg(""), 2500); return; }
+    if (!birthday.musicSrc) {
+      setMsg("Add a song in the config 🎵");
+      setTimeout(() => setMsg(""), 2500);
+      return;
+    }
     const a = ref.current;
     if (!a) return;
     if (on) {
@@ -164,7 +261,11 @@ export function MusicToggle({ autoPlay = false }: { autoPlay?: boolean }) {
         {on ? (
           <span className="flex items-end gap-0.5 h-5">
             {[0, 1, 2].map((i) => (
-              <span key={i} className="w-1 rounded bg-primary animate-pulse" style={{ height: `${8 + i * 5}px`, animationDelay: `${i * 0.2}s` }} />
+              <span
+                key={i}
+                className="w-1 rounded bg-primary animate-pulse"
+                style={{ height: `${8 + i * 5}px`, animationDelay: `${i * 0.2}s` }}
+              />
             ))}
           </span>
         ) : (

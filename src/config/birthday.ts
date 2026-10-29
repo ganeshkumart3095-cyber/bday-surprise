@@ -18,11 +18,15 @@ export const birthday = {
   question: "Do you know how special you are?",
   finalMessage: "May this year be your best one yet!",
 
-  // Leave empty ("") to hide the music player's sound until you add a song.
+  // Main journey song from Anna
   musicSrc: assetUrl("/audio/birthday-music.mp3"),
   musicTitle: "Birthday melody for you 🎵",
 
-  // 20 photos — mapped cleanly to existing images in public/images
+  // Funny reveal photo & celebration song for popup
+  funnyPhoto: assetUrl("/images/funny-photo.jpg"),
+  happyBirthdayMusicSrc: assetUrl("/audio/happy-birthday.mp3"),
+
+  // Complete memories collection (all photos cleanly mapped)
   photos: [
     {
       src: assetUrl("/images/photo1.jpg"),
@@ -124,9 +128,39 @@ export const birthday = {
       alt: "Memory 20 with Thangachii",
       caption: "Here's to many more memories 🌸",
     },
+    {
+      src: assetUrl("/images/photo20.jpg"),
+      alt: "Campus memories with Thangachii",
+      caption: "College days & golden friendships 💕",
+    },
+    {
+      src: assetUrl("/images/photo21.jpg"),
+      alt: "Spider-Man squad",
+      caption: "Spider squad mode: ON! 🕷️✨",
+    },
+    {
+      src: assetUrl("/images/photo22.jpg"),
+      alt: "Moonlit fun with Thangachii",
+      caption: "Silly filters & endless laughter 🌙",
+    },
+    {
+      src: assetUrl("/images/photo23.jpg"),
+      alt: "Flower in her hair",
+      caption: "The brightest smile in the room 🌸",
+    },
+    {
+      src: assetUrl("/images/photo24.jpg"),
+      alt: "Happy smiles",
+      caption: "Smiles that brighten every single day 😊",
+    },
+    {
+      src: assetUrl("/images/photo25.jpg"),
+      alt: "Thumbs up gang",
+      caption: "Forever proud of you, Thangachii 🫂💯",
+    },
   ],
 
-  // 1–3 videos. Use "" for src to show a gentle placeholder card.
+  // 2 videos with real video clips
   videos: [
     {
       src: assetUrl("/videos/video1.mp4"),
@@ -135,14 +169,14 @@ export const birthday = {
       caption: "A tiny clip that always makes me smile.",
     },
     {
-      src: "",
+      src: assetUrl("/videos/video2.mp4"),
       poster: "",
-      title: "Birthday wishes from family",
-      caption: "Everyone who loves you, in one place.",
+      title: "Celebration moments",
+      caption: "Unfiltered laughter, joy, and memories.",
     },
   ],
 
-  // The letter — one string per paragraph (5–7 is perfect).
+  // The letter — one string per paragraph
   letter: [
     "Dear Thangachii,",
     "Idhuvum oru vagaila love dhaan... aana idhu romba pure-aana, edhirpaappu illaadha love 🫂. Oru naal Instagram-la random-ah meet panna ponnu, konjam konjam-ah pesi pazhaga aarambichom. Appo lam enakku nee stranger dhaan...😅 aana naal pogapoga, unnoda care, understanding, paasam ellame en manasula oru thani idam create panniduchu🥹.",
@@ -153,14 +187,4 @@ export const birthday = {
     "HAPPY BIRTHDAY MA THANGACHIII 🤍🫂",
   ],
   signature: "With all my love, your Anna 💗",
-
-  // "Why you're special" — add or edit as many as you like.
-  reasons: [
-    { emoji: "🌸", title: "Your kindness", text: "You make everyone around you feel cared for." },
-    { emoji: "😂", title: "Your laugh", text: "It's contagious, loud, and my favourite sound." },
-    { emoji: "💪", title: "Your strength", text: "You face every challenge with quiet courage." },
-    { emoji: "🎨", title: "Your creativity", text: "You see beauty where others don't look." },
-    { emoji: "🤝", title: "Your loyalty", text: "Once you love someone, it's for life." },
-    { emoji: "✨", title: "Just you", text: "There is no one else in the world like you." },
-  ],
 };
