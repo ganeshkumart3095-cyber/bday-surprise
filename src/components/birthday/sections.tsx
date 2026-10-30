@@ -267,8 +267,14 @@ const getBentoType = (i: number): BentoType => {
   // 8: photo10 - "The best cake thief 🎂"
   // 11: photo13 - "Family photo — you stole the show"
   // 16: photo20 - "College days & golden friendships 💕"
-  // 21: photo25 - "Forever proud of you, Thangachii 🫂💯"
-  if ([0, 3, 8, 11, 16, 21].includes(i)) {
+  // 21: photo25 - "Forever proud of you, Princess 👑💯"
+  // 24: photo28 - "Thumbs up with Pookie bows"
+  // 29: photo33 - "Floral grace & golden hour glow"
+  // 33: photo37 - "Saree elegance <3"
+  // 34: photo38 - "Peacock rangoli celebration with school squad"
+  // 36: photo40 - "Sunny beach day with best friends"
+  // 39: photo43 - "Iconic golden sunset silhouette"
+  if ([0, 3, 8, 11, 16, 21, 24, 29, 33, 34, 36, 39].includes(i)) {
     return "big";
   }
 
@@ -279,7 +285,13 @@ const getBentoType = (i: number): BentoType => {
   // 13: photo15 (900x1600 proud Anna)
   // 14: photo16 (720x1561 late night talks)
   // 15: photo17 (720x1600 graduation glow)
-  if ([1, 2, 5, 13, 14, 15].includes(i)) {
+  // 27: photo31 (899x1599 panda filter)
+  // 28: photo32 (899x1599 classroom)
+  // 30: photo34 (899x1599 pretty in pink)
+  // 31: photo35 (1080x1920 flower in hair)
+  // 41: photo45 (720x1600 purple gown with teddy bear)
+  // 42: photo46 (519x1152 pure innocence)
+  if ([1, 2, 5, 13, 14, 15, 27, 28, 30, 31, 41, 42].includes(i)) {
     return "tall";
   }
 

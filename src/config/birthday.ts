@@ -151,33 +151,150 @@ export const birthday = {
       alt: "Sweet companion moments",
       caption: "Floating pink hearts & sweet companion moments 💕✨",
     },
+    {
+      src: assetUrl("/images/photo28.jpg"),
+      alt: "Thumbs up with Pookie bows",
+      caption: "Thumbs up with Pookie bows 👍🎀",
+    },
+    {
+      src: assetUrl("/images/photo29.jpg"),
+      alt: "Spider squad vibes with bestie",
+      caption: "Spider squad vibes with bestie 🕷️✨",
+    },
+    {
+      src: assetUrl("/images/photo30.jpg"),
+      alt: "Study breaks & cheerful smiles",
+      caption: "Study breaks & cheerful smiles 🌸",
+    },
+    {
+      src: assetUrl("/images/photo31.jpg"),
+      alt: "Panda filter princess",
+      caption: "Panda filter princess 🐼👑",
+    },
+    {
+      src: assetUrl("/images/photo32.jpg"),
+      alt: "Classroom selfies & endless banter",
+      caption: "Classroom selfies & endless banter 📚",
+    },
+    {
+      src: assetUrl("/images/photo33.jpg"),
+      alt: "Floral grace & golden hour glow",
+      caption: "Floral grace & golden hour glow ✨",
+    },
+    {
+      src: assetUrl("/images/photo34.jpg"),
+      alt: "Pretty in pink & playful expressions",
+      caption: "Pretty in pink & playful expressions 💗",
+    },
+    {
+      src: assetUrl("/images/photo35.jpg"),
+      alt: "Flower in hair, dreams in eyes",
+      caption: "Flower in hair, dreams in eyes 🌼",
+    },
+    {
+      src: assetUrl("/images/photo36.jpg"),
+      alt: "Puppy dog duo outdoor giggles",
+      caption: "Puppy dog duo outdoor giggles 🐶",
+    },
+    {
+      src: assetUrl("/images/photo37.jpg"),
+      alt: "Saree elegance & timeless charm",
+      caption: "Saree elegance & timeless charm <3",
+    },
+    {
+      src: assetUrl("/images/photo38.jpg"),
+      alt: "Peacock rangoli celebration with school squad",
+      caption: "Peacock rangoli celebration with school squad 🦚",
+    },
+    {
+      src: assetUrl("/images/photo39.jpg"),
+      alt: "College celebration hall lights & memories",
+      caption: "College celebration hall lights & memories 🏮",
+    },
+    {
+      src: assetUrl("/images/photo40.jpg"),
+      alt: "Sunny beach day with best friends",
+      caption: "Sunny beach day with best friends 🏖️",
+    },
+    {
+      src: assetUrl("/images/photo41.jpg"),
+      alt: "Sunset bridge peace & quiet reflections",
+      caption: "Sunset bridge peace & quiet reflections 🌅",
+    },
+    {
+      src: assetUrl("/images/photo42.jpg"),
+      alt: "Garden smiles in purple elegance",
+      caption: "Garden smiles in purple elegance 💜",
+    },
+    {
+      src: assetUrl("/images/photo43.jpg"),
+      alt: "Iconic golden sunset silhouette",
+      caption: "Iconic golden sunset silhouette 🌇",
+    },
+    {
+      src: assetUrl("/images/photo44.jpg"),
+      alt: "School bus adventures & unstoppable laughter",
+      caption: "School bus adventures & unstoppable laughter 🚌",
+    },
+    {
+      src: assetUrl("/images/photo45.jpg"),
+      alt: "Purple princess gown & teddy bear cuddle",
+      caption: "Purple princess gown & teddy bear cuddle 🧸",
+    },
+    {
+      src: assetUrl("/images/photo46.jpg"),
+      alt: "Pure innocence & sweetest sister love",
+      caption: "Pure innocence & sweetest sister love 💕",
+    },
   ],
 
-  // Private intimate memories (accessible ONLY via typing the secret route /secret in address bar)
+  // Private intimate memories & love letter written by her lover (accessible ONLY via typing /secret)
   secretPhotos: [
     {
       src: assetUrl("/images/photo3.jpg"),
-      alt: "Secret Memory with Thangachii",
-      caption: "Partners in crime since forever",
+      alt: "Our goofy selfies together",
+      caption: "That crazy, cute smile of yours that stole my heart forever 🤍",
     },
     {
       src: assetUrl("/images/photo18.jpg"),
-      alt: "Secret Memory with Thangachii",
-      caption: "Just being us 🤍",
+      alt: "Holding hands with a drawn heart",
+      caption:
+        "En viral korthu nee nadakkum podhu, ulagamae ninnu pogudhu di... Forever your hand in mine 🤍",
     },
     {
       src: assetUrl("/images/photo19.jpg"),
-      alt: "Secret Memory with Thangachii",
-      caption: "Always my favourite person",
+      alt: "Walking side by side together",
+      caption: "Every single step through this life, only with you by my side 💕",
     },
     {
       src: assetUrl("/images/photo.jpg"),
-      alt: "Secret Memory with Thangachii",
-      caption: "Here's to many more memories 🌸",
+      alt: "Floating heart crowns with my girl",
+      caption: "You will always be the queen of my heart, today and forever 👑❤️",
     },
   ],
 
-  // 8 videos with real video clips
+  // Secret vault content written by her lover
+  secretVault: {
+    title: "Happy Birthday, En Uyire 🤍✨",
+    subtitle:
+      "A secret sanctuary meant only for our eyes. Every beat of my heart belongs to you, my love.",
+    badge: "For My Girl Only 🔒",
+    video: {
+      src: assetUrl("/videos/video-secret.mp4"),
+      title: "Our Quiet Moments Together 🌿🤍",
+      caption: "Every single step with you feels like a dream I never want to wake up from.",
+    },
+    letter: [
+      "Happy Birthday, En Uyire 🤍",
+      "Indha ulagathula evvalo per unakku birthday wishes sonnalum, indha oru pakkam unakku mattum dhaan... namakku mattum dhaan. Un kitta naan pesina mudhal naal enakku innum nalla nyabagam irukku. Appo lam oru naal nee en vaazhkaiyae aava nu naan nenaikala di...",
+      "Aana ippo? En ovvoru ninaivulayum, en ovvoru aasaikulayum nee dhaan irukka. Unnoda sirippu en manasukku tharra amaidhi vera edhulayum kedaikadhu. Un kooda irukura ovvoru nodiyum, I feel like the luckiest person alive.",
+      "Sila ninaivugal indha ulagathukku kaata mudiyadhu... aana namakku adhu dhaan uyir. En kai korthu nee nadakkum podhu, indha kaala neram ellame ninnudum. Indha jenmam mattum illa, innum ethana jenmam eduthaalum, un kai pudichu un kooda dhaan vaazhanum.",
+      "Happy Birthday to my favourite person, my safe place, my best friend, and the girl of my dreams. Always by your side, protecting you, loving you more with every passing second.",
+    ],
+    signature: "Forever & Always Yours, With all my heart and soul ❤️💍",
+  },
+
+  // 12 videos with real video clips
   videos: [
     {
       src: assetUrl("/videos/video1.mp4"),
@@ -226,6 +343,30 @@ export const birthday = {
       poster: "",
       title: "Quick Spark ✨",
       caption: "Spontaneous joy and unstoppable energy!",
+    },
+    {
+      src: assetUrl("/videos/video9.mp4"),
+      poster: "",
+      title: "Puppy Smiles 🐶",
+      caption: "Silly filter fun between classes.",
+    },
+    {
+      src: assetUrl("/videos/video10.mp4"),
+      poster: "",
+      title: "Campus Laughter 😄",
+      caption: "Unfiltered joyful moments with friends.",
+    },
+    {
+      src: assetUrl("/videos/video11.mp4"),
+      poster: "",
+      title: "Laughing Out Loud 😂",
+      caption: "Laughing out loud at the silliest things.",
+    },
+    {
+      src: assetUrl("/videos/video12.mp4"),
+      poster: "",
+      title: "Sunny Afternoon ☀️",
+      caption: "Warm smiles on campus grounds.",
     },
   ],
 
