@@ -280,11 +280,6 @@ export const birthday = {
       "A secret sanctuary meant only for our eyes. Every beat of my heart belongs to you, my love.",
     badge: "From Your Maddy 🔒",
     loverName: "Maddy",
-    video: {
-      src: assetUrl("/videos/video-secret.mp4"),
-      title: "Our Quiet Moments Together 🌿🤍",
-      caption: "Walking beside you, listening to your voice, feeling the quiet breeze... Every step with you is my favourite place to be.",
-    },
     letter: [
       "Happy Birthday, En Uyire 🤍",
       "Indha ulagathula evvalo per unakku birthday wishes sonnalum, indha oru pakkam unakku mattum dhaan... namakku mattum dhaan. Un kitta naan pesina mudhal naal enakku innum nalla nyabagam irukku. Appo lam oru naal nee en vaazhkaiyae aava nu naan nenaikala di...",

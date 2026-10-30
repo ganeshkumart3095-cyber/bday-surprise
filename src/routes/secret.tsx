@@ -12,7 +12,6 @@ import {
   Sparkles,
   Lock,
   ArrowLeft,
-  Play,
   Mail,
   Flame,
 } from "lucide-react";
@@ -208,40 +207,6 @@ function SecretPage() {
             })}
           </div>
         </div>
-
-        {/* Secret Couple Video Feature */}
-        {vault.video && (
-          <div className="mb-16 overflow-hidden rounded-3xl bg-gradient-to-b from-[#24121b] to-[#170c12] border border-rose-500/30 shadow-2xl p-6 sm:p-8 backdrop-blur-md">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-rose-500/20 text-rose-300">
-                  <Play className="h-3.5 w-3.5 fill-current ml-0.5" />
-                </span>
-                <span className="text-xs font-semibold uppercase tracking-wider text-rose-300">
-                  Private Couple Clip
-                </span>
-              </div>
-              <span className="text-xs font-mono text-rose-400/80 bg-rose-950/60 px-2.5 py-0.5 rounded-full border border-rose-500/20">
-                OUR MEMORY
-              </span>
-            </div>
-
-            <h3 className="font-script text-3xl sm:text-4xl text-rose-100 mb-2">
-              {vault.video.title}
-            </h3>
-            <p className="text-xs sm:text-sm text-rose-200/70 mb-5">{vault.video.caption}</p>
-
-            <div className="relative w-full rounded-2xl overflow-hidden bg-black/80 border border-white/10 flex items-center justify-center shadow-inner max-h-[500px]">
-              <video
-                src={vault.video.src}
-                controls
-                playsInline
-                preload="metadata"
-                className="w-full max-h-[480px] object-contain rounded-xl"
-              />
-            </div>
-          </div>
-        )}
 
         {/* Lover's Heartfelt Romantic Love Letter */}
         <div className="mb-16 overflow-hidden rounded-3xl bg-gradient-to-b from-[#2a1320] via-[#200e18] to-[#180912] border border-rose-500/30 p-6 sm:p-10 shadow-2xl backdrop-blur-md">
