@@ -21,7 +21,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export const Route = createFileRoute("/secret")({
   head: () => ({
     meta: [
-      { title: "Our Secret Memories 🔒🤍 — From The One Who Loves You" },
+      { title: "Our Secret Memories 🔒🤍 — From Maddy" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -111,7 +111,7 @@ function SecretPage() {
             className="inline-flex items-center gap-2 rounded-full bg-rose-950/60 px-4 py-1.5 shadow-soft border border-rose-500/30 text-xs font-semibold uppercase tracking-widest text-rose-300 mb-4 backdrop-blur-sm"
           >
             <Sparkles className="h-3.5 w-3.5 text-amber-300" />
-            <span>Written With Love By Your Person</span>
+            <span>Written With Love By Maddy 🤍</span>
           </motion.div>
           <h1 className="font-script text-5xl sm:text-6xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-rose-200 via-pink-100 to-rose-300 leading-tight">
             {vault.title}
@@ -249,7 +249,7 @@ function SecretPage() {
             <div className="flex items-center gap-2.5">
               <Mail className="h-5 w-5 text-rose-400" />
               <h2 className="font-script text-3xl sm:text-4xl text-rose-100">
-                A Letter From The One Who Loves You Most 💌
+                A Letter From Maddy 💌
               </h2>
             </div>
             <button
@@ -286,7 +286,7 @@ function SecretPage() {
                     {vault.signature}
                   </p>
                   <p className="text-xs text-rose-400 mt-1 uppercase tracking-widest font-mono">
-                    En Uyire · Forever Yours
+                    En Uyire · Forever Yours, Maddy 🤍💍
                   </p>
                 </div>
               </motion.article>
@@ -320,7 +320,7 @@ function SecretPage() {
               className="inline-flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/20 px-6 py-2.5 text-xs sm:text-sm font-semibold text-rose-200 transition-all hover:scale-105 active:scale-95 border border-white/10"
             >
               <ArrowLeft className="h-4 w-4" />
-              <span>Return to Main Birthday Story</span>
+              <span>Return to Anna's Birthday Story 🌸</span>
             </Link>
           </div>
         </div>

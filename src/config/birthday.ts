@@ -248,50 +248,51 @@ export const birthday = {
     },
   ],
 
-  // Private intimate memories & love letter written by her lover (accessible ONLY via typing /secret)
+  // Private intimate memories & love letter written by her lover Maddy (accessible ONLY via typing /secret)
   secretPhotos: [
     {
       src: assetUrl("/images/photo3.jpg"),
-      alt: "Our goofy selfies together",
+      alt: "Maddy & Thangachii goofy selfies",
       caption: "That crazy, cute smile of yours that stole my heart forever 🤍",
     },
     {
       src: assetUrl("/images/photo18.jpg"),
-      alt: "Holding hands with a drawn heart",
+      alt: "Maddy holding your hand with a drawn heart",
       caption:
         "En viral korthu nee nadakkum podhu, ulagamae ninnu pogudhu di... Forever your hand in mine 🤍",
     },
     {
       src: assetUrl("/images/photo19.jpg"),
-      alt: "Walking side by side together",
+      alt: "Maddy & Princess walking side by side",
       caption: "Every single step through this life, only with you by my side 💕",
     },
     {
       src: assetUrl("/images/photo.jpg"),
-      alt: "Floating heart crowns with my girl",
+      alt: "Maddy & Princess with floating heart crowns",
       caption: "You will always be the queen of my heart, today and forever 👑❤️",
     },
   ],
 
-  // Secret vault content written by her lover
+  // Secret vault content written by her lover Maddy
   secretVault: {
     title: "Happy Birthday, En Uyire 🤍✨",
     subtitle:
       "A secret sanctuary meant only for our eyes. Every beat of my heart belongs to you, my love.",
-    badge: "For My Girl Only 🔒",
+    badge: "From Your Maddy 🔒",
+    loverName: "Maddy",
     video: {
       src: assetUrl("/videos/video-secret.mp4"),
       title: "Our Quiet Moments Together 🌿🤍",
-      caption: "Every single step with you feels like a dream I never want to wake up from.",
+      caption: "Walking beside you, listening to your voice, feeling the quiet breeze... Every step with you is my favourite place to be.",
     },
     letter: [
       "Happy Birthday, En Uyire 🤍",
       "Indha ulagathula evvalo per unakku birthday wishes sonnalum, indha oru pakkam unakku mattum dhaan... namakku mattum dhaan. Un kitta naan pesina mudhal naal enakku innum nalla nyabagam irukku. Appo lam oru naal nee en vaazhkaiyae aava nu naan nenaikala di...",
-      "Aana ippo? En ovvoru ninaivulayum, en ovvoru aasaikulayum nee dhaan irukka. Unnoda sirippu en manasukku tharra amaidhi vera edhulayum kedaikadhu. Un kooda irukura ovvoru nodiyum, I feel like the luckiest person alive.",
-      "Sila ninaivugal indha ulagathukku kaata mudiyadhu... aana namakku adhu dhaan uyir. En kai korthu nee nadakkum podhu, indha kaala neram ellame ninnudum. Indha jenmam mattum illa, innum ethana jenmam eduthaalum, un kai pudichu un kooda dhaan vaazhanum.",
+      "Aana ippo? En ovvoru ninaivulayum, en ovvoru aasaikulayum nee dhaan irukka. Unnoda sirippu en manasukku tharra amaidhi vera edhulayum kedaikadhu. Un kooda irukura ovvoru nodiyum, I feel like the luckiest person alive in this universe ✨.",
+      "Sila ninaivugal indha ulagathukku kaata mudiyadhu... aana namakku adhu dhaan uyir. En kai korthu nee nadakkum podhu, indha kaala neram ellame ninnudum. Indha jenmam mattum illa, innum ethana jenmam eduthaalum, un kai pudichu un kooda dhaan vaazhanum 🫂❤️.",
       "Happy Birthday to my favourite person, my safe place, my best friend, and the girl of my dreams. Always by your side, protecting you, loving you more with every passing second.",
     ],
-    signature: "Forever & Always Yours, With all my heart and soul ❤️💍",
+    signature: "Forever & Always Yours, With all my heart and soul ❤️💍 — Your Maddy",
   },
 
   // 12 videos with real video clips
